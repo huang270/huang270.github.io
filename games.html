@@ -1,0 +1,2501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏教学 | 儿童趣味汉语学习平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        :root {
+            --primary: #3498db;
+            --secondary: #f1c40f;
+            --accent: #e74c3c;
+            --light-bg: #f0f7ff;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --light-text: #7f8c8d;
+            --success: #2ecc71;
+            --pink: #ff9ff3;
+            --purple: #9b59b6;
+            --orange: #e67e22;
+            --green: #27ae60;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text);
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="3" fill="%23b3e5fc" opacity="0.3"/><circle cx="50" cy="50" r="2" fill="%23b3e5fc" opacity="0.3"/><circle cx="80" cy="30" r="4" fill="%23b3e5fc" opacity="0.3"/></svg>');
+            background-size: 120px 120px;
+            transition: background-color 0.3s;
+        }
+        
+        .dark-mode {
+            --light-bg: #1a1a2e;
+            --card-bg: #16213e;
+            --text: #e6e6e6;
+            --light-text: #aaaaaa;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="3" fill="%230d3b66" opacity="0.3"/><circle cx="50" cy="50" r="2" fill="%230d3b66" opacity="0.3"/><circle cx="80" cy="30" r="4" fill="%230d3b66" opacity="0.3"/></svg>');
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--primary);
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .logo .for-kids {
+            color: var(--secondary);
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+            border-radius: 3px;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .lang-toggle {
+            background: none;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-toggle:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* 移动端菜单按钮 */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .menu-toggle:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
+        /* 游戏教学页面样式 */
+        .games-hero {
+            background: linear-gradient(135deg, #e0f7ff, #b3e5fc);
+            padding: 80px 0 60px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .dark-mode .games-hero {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+        }
+        
+        .games-hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 15px;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .games-hero p {
+            font-size: 20px;
+            color: var(--light-text);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            animation: fadeInUp 1s ease-out 0.2s;
+            animation-fill-mode: both;
+        }
+        
+        /* 教学辅助区域 */
+        .teacher-assistance {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            padding: 50px 0;
+            border-radius: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .dark-mode .teacher-assistance {
+            background: linear-gradient(to right, #1a5276, #1b2631);
+        }
+        
+        .assistance-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .teacher-assistance .section-title {
+            color: white;
+        }
+        
+        .teacher-assistance .section-title::after {
+            background: var(--secondary);
+        }
+        
+        .assistance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .assistance-card {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+        
+        .assistance-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .assistance-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .assistance-title i {
+            color: var(--secondary);
+        }
+        
+        .assistance-content {
+            line-height: 1.8;
+        }
+        
+        .suggestion-item {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .suggestion-item::before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: var(--secondary);
+            font-size: 20px;
+        }
+        
+        /* 反思区域 */
+        .reflection-area {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .dark-mode .reflection-area {
+            background: var(--card-bg);
+        }
+        
+        .reflection-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            resize: vertical;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+            background: var(--light-bg);
+            color: var(--text);
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .submit-btn {
+            background: var(--secondary);
+            color: var(--text);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin-left: auto;
+            box-shadow: 0 4px 10px rgba(241, 196, 15, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255,255,255,0.3);
+            transform: rotate(30deg);
+            transition: all 0.6s;
+        }
+        
+        .submit-btn:hover::after {
+            left: 120%;
+        }
+        
+        .submit-btn:hover {
+            background: #e6b800;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(241, 196, 15, 0.4);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 50px 0 20px;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+        
+        .dark-mode footer {
+            background: #0d1b2a;
+        }
+        
+        .footer-content {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* 进度条样式 */
+        .progress-container {
+            width: 100%;
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .dark-mode .progress-container {
+            background: #2c3e50;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--success);
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 16px;
+            color: var(--text);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        /* 游戏结果动画 */
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .celebrate {
+            animation: celebrate 0.5s ease;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .assistance-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .games-hero h1 {
+                font-size: 32px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .lang-toggle span {
+                display: none;
+            }
+            
+            .lang-toggle {
+                width: 45px;
+                height: 45px;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+            }
+        }
+        
+        /* 互动小游戏区 */
+        .mini-games-section {
+            background: linear-gradient(135deg, #ff9ff3, #f368e0);
+            padding: 60px 0;
+            margin: 60px 0;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark-mode .mini-games-section {
+            background: linear-gradient(135deg, #8e44ad, #6c3483);
+        }
+        
+        .mini-games-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .mini-games-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .mini-game-tab {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .mini-game-tab.active {
+            background: white;
+            color: #f368e0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dark-mode .mini-game-tab.active {
+            background: #f8f9fa;
+        }
+        
+        .mini-game-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            min-height: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark-mode .mini-game-content {
+            background: #16213e;
+        }
+        
+        .game-area {
+            display: none;
+        }
+        
+        .game-area.active {
+            display: block;
+        }
+        
+        /* 词汇选择题 */
+        .vocab-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .vocab-prompt {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text);
+            min-height: 60px;
+            font-weight: bold;
+            padding: 15px;
+            background: #f0f7ff;
+            border-radius: 10px;
+        }
+        
+        .dark-mode .vocab-prompt {
+            background: #1a2a4f;
+        }
+        
+        .vocab-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 500px) {
+            .vocab-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .vocab-option {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #3498db;
+        }
+        
+        .dark-mode .vocab-option {
+            background: #1a2a4f;
+        }
+        
+        .vocab-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: #3498db;
+            color: white;
+        }
+        
+        .vocab-option.selected {
+            background: #3498db;
+            color: white;
+        }
+        
+        .vocab-option.correct {
+            background: #d5f5e3;
+            border-color: #27ae60;
+        }
+        
+        .vocab-option.incorrect {
+            background: #fadbd8;
+            border-color: #e74c3c;
+        }
+        
+        /* 句子选择题 */
+        .sentence-game-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .sentence-prompt {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text);
+            min-height: 60px;
+            font-weight: bold;
+            padding: 15px;
+            background: #f0f7ff;
+            border-radius: 10px;
+        }
+        
+        .dark-mode .sentence-prompt {
+            background: #1a2a4f;
+        }
+        
+        .sentence-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .sentence-option {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #3498db;
+        }
+        
+        .dark-mode .sentence-option {
+            background: #1a2a4f;
+        }
+        
+        .sentence-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: #3498db;
+            color: white;
+        }
+        
+        .sentence-option.selected {
+            background: #3498db;
+            color: white;
+        }
+        
+        .sentence-option.correct {
+            background: #d5f5e3;
+            border-color: #27ae60;
+        }
+        
+        .sentence-option.incorrect {
+            background: #fadbd8;
+            border-color: #e74c3c;
+        }
+        
+        /* 看图选择题 */
+        .picture-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .picture-prompt {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text);
+            min-height: 60px;
+            font-weight: bold;
+            padding: 15px;
+            background: #f0f7ff;
+            border-radius: 10px;
+        }
+        
+        .dark-mode .picture-prompt {
+            background: #1a2a4f;
+        }
+        
+        .picture-area {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .picture-display {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            background: #f0f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin-bottom: 20px;
+            border: 2px solid #3498db;
+        }
+        
+        .dark-mode .picture-display {
+            background: #1a2a4f;
+        }
+        
+        .picture-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (max-width: 500px) {
+            .picture-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .picture-option {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #3498db;
+        }
+        
+        .dark-mode .picture-option {
+            background: #1a2a4f;
+        }
+        
+        .picture-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: #3498db;
+            color: white;
+        }
+        
+        .picture-option.selected {
+            background: #3498db;
+            color: white;
+        }
+        
+        .picture-option.correct {
+            background: #d5f5e3;
+            border-color: #27ae60;
+        }
+        
+        .picture-option.incorrect {
+            background: #fadbd8;
+            border-color: #e74c3c;
+        }
+        
+        /* 游戏结果样式 */
+        .game-result-area {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .dark-mode .game-result-area {
+            background: #1e2a3a;
+        }
+        
+        .game-score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .game-message {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        /* 新增：文化知识游戏样式 */
+        .culture-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .culture-prompt {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text);
+            min-height: 60px;
+            font-weight: bold;
+            padding: 15px;
+            background: #f0f7ff;
+            border-radius: 10px;
+        }
+        
+        .dark-mode .culture-prompt {
+            background: #1a2a4f;
+        }
+        
+        .culture-image {
+            width: 200px;
+            height: 150px;
+            margin: 0 auto 20px;
+            background: #f0f7ff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            border: 2px solid #3498db;
+            overflow: hidden;
+        }
+        
+        .dark-mode .culture-image {
+            background: #1a2a4f;
+        }
+        
+        .culture-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .culture-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 500px) {
+            .culture-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .culture-option {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #3498db;
+        }
+        
+        .dark-mode .culture-option {
+            background: #1a2a4f;
+        }
+        
+        .culture-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: #3498db;
+            color: white;
+        }
+        
+        .culture-option.selected {
+            background: #3498db;
+            color: white;
+        }
+        
+        .culture-option.correct {
+            background: #d5f5e3;
+            border-color: #27ae60;
+        }
+        
+        .culture-option.incorrect {
+            background: #fadbd8;
+            border-color: #e74c3c;
+        }
+        /* 新增：语音选择题样式 */
+        .audio-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .audio-prompt {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text);
+            min-height: 60px;
+            font-weight: bold;
+            padding: 15px;
+            background: #f0f7ff;
+            border-radius: 10px;
+        }
+        
+        .dark-mode .audio-prompt {
+            background: #1a2a4f;
+        }
+        
+        .audio-player {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .play-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-size: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .play-button:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        .audio-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 500px) {
+            .audio-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .audio-option {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #3498db;
+        }
+        
+        .dark-mode .audio-option {
+            background: #1a2a4f;
+        }
+        
+        .audio-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            background: #3498db;
+            color: white;
+        }
+        
+        .audio-option.selected {
+            background: #3498db;
+            color: white;
+        }
+        
+        .audio-option.correct {
+            background: #d5f5e3;
+            border-color: #27ae60;
+        }
+        
+        .audio-option.incorrect {
+            background: #fadbd8;
+            border-color: #e74c3c;
+        }
+        
+        /* 新增：汉字配对游戏样式 */
+        .matching-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .matching-prompt {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text);
+            min-height: 60px;
+            font-weight: bold;
+            padding: 15px;
+            background: #f0f7ff;
+            border-radius: 10px;
+        }
+        
+        .dark-mode .matching-prompt {
+            background: #1a2a4f;
+        }
+        
+        .matching-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 600px) {
+            .matching-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .matching-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .matching-item {
+            background: #f0f7ff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #3498db;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dark-mode .matching-item {
+            background: #1a2a4f;
+        }
+        
+        .matching-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .matching-item.selected {
+            background: #3498db;
+            color: white;
+        }
+        
+        .matching-item.matched {
+            background: #d5f5e3;
+            border-color: #27ae60;
+            cursor: default;
+        }
+        
+        .matching-item.incorrect {
+            background: #fadbd8;
+            border-color: #e74c3c;
+        }
+        
+        /* 游戏按钮通用样式 */
+        .game-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .game-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-btn.secondary {
+            background: var(--light-text);
+        }
+        
+        .game-btn.secondary:hover {
+            background: #636e72;
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 游戏类型颜色 */
+        .puzzle { background: linear-gradient(135deg, #ff9ff3, #f368e0); }
+        .matching { background: linear-gradient(135deg, #1dd1a1, #10ac84); }
+        .roleplay { background: linear-gradient(135deg, #54a0ff, #2e86de); }
+        .mission { background: linear-gradient(135deg, #ff9f43, #f39c12); }
+        
+        /* 游戏卡片样式 */
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--light-text);
+        }
+        
+        .game-stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 主题切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .language-notification {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            animation: fadeInUp 0.5s ease;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-dragon" style="font-size: 32px; color: var(--accent);"></i>
+                <h1>CHINESE <span class="for-kids">FOR KIDS</span></h1>
+            </div>
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> <span class="translatable" data-en="Home" data-zh="首页">首页</span></a></li>
+                    <li><a href="courses.html"><i class="fas fa-book"></i> <span class="translatable" data-en="Courses" data-zh="课程资源">课程资源</span></a></li>
+                    <li><a href="games.html"><i class="fas fa-gamepad"></i> <span class="translatable" data-en="Games" data-zh="游戏教学">游戏教学</span></a></li>
+                    <li><a href="ai.html"><i class="fas fa-robot"></i> <span class="translatable" data-en="AI Assistant" data-zh="AI互动">AI互动</span></a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> <span class="translatable" data-en="Contact" data-zh="联系我们">联系我们</span></a></li>
+                </ul>
+            </nav>
+            <button class="lang-toggle" id="langToggle">
+                <i class="fas fa-globe"></i>
+                <span class="translatable" data-en="EN/中文" data-zh="中文/EN">EN/中文</span>
+            </button>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 游戏教学主内容 -->
+    <main>
+        <!-- 顶部宣传区 -->
+        <section class="games-hero">
+            <div class="container">
+                <h1 class="translatable" data-en="Fun Chinese Learning Games" data-zh="趣味游戏教学区">趣味游戏教学区</h1>
+                <p class="translatable" data-en="Learn Chinese through games - making language learning fun and engaging! Specially designed for children aged 6-9." data-zh="通过游戏学习汉语，让语言学习变得生动有趣！精选适合6-9岁儿童的游戏化学习资源">通过游戏学习汉语，让语言学习变得生动有趣！精选适合6-9岁儿童的游戏化学习资源</p>
+            </div>
+        </section>
+        
+        <!-- 互动小游戏区 -->
+        <section class="mini-games-section">
+            <div class="mini-games-container">
+                <h2 class="section-title" style="color: white;" class="translatable" data-en="Interactive Mini Games" data-zh="互动小游戏区">互动小游戏区</h2>
+                <p style="text-align: center; color: rgba(255, 255, 255, 0.9); max-width: 800px; margin: 0 auto 30px;" class="translatable" data-en="Practice your Chinese knowledge with fun mini games!" data-zh="通过以下小游戏巩固汉语知识，边玩边学！">
+                    通过以下小游戏巩固汉语知识，边玩边学！
+                </p>
+                
+                <div class="mini-games-tabs">
+                    <button class="mini-game-tab active" data-game="vocab"><span class="translatable" data-en="Vocabulary" data-zh="词汇选择">词汇选择</span></button>
+                    <button class="mini-game-tab" data-game="sentence"><span class="translatable" data-en="Sentences" data-zh="语法判断">语法判断</span></button>
+                    <button class="mini-game-tab" data-game="picture"><span class="translatable" data-en="Picture Choice" data-zh="看图选择">看图选择</span></button>
+                    <!-- 修改：将汉字拼写替换为文化知识 -->
+                    <button class="mini-game-tab" data-game="culture"><span class="translatable" data-en="Culture" data-zh="文化知识">文化知识</span></button>
+                    <!-- 新增：语音选择题 -->
+                    <button class="mini-game-tab" data-game="audio"><span class="translatable" data-en="Audio" data-zh="语音选择">语音选择</span></button>
+                    <button class="mini-game-tab" data-game="matching"><span class="translatable" data-en="Matching" data-zh="汉字配对">汉字配对</span></button>
+                </div>
+                
+                <div class="mini-game-content">
+                    <!-- 词汇选择题 -->
+                    <div class="game-area active" id="vocab-game">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--purple);" class="translatable" data-en="Vocabulary Choice Game" data-zh="词汇选择题">词汇选择题</h3>
+                        <p style="text-align: center; margin-bottom: 30px; color: var(--light-text);" class="translatable" data-en="Choose the correct Chinese word for the English meaning" data-zh="选择与英文意思对应的中文词汇">
+                            选择与英文意思对应的中文词汇
+                        </p>
+                        
+                        <div class="vocab-container">
+                            <div class="vocab-prompt" id="vocab-prompt">
+                                <span class="translatable" data-en="Select the Chinese word for:" data-zh="请选择英文单词对应的中文：">请选择英文单词对应的中文：</span>
+                                <strong id="vocab-word" class="translatable" data-en="Apple" data-zh="苹果">苹果</strong>
+                            </div>
+                            
+                            <div class="vocab-options" id="vocab-options">
+                                <div class="vocab-option" data-correct="true">苹果</div>
+                                <div class="vocab-option">香蕉</div>
+                                <div class="vocab-option">橘子</div>
+                                <div class="vocab-option">葡萄</div>
+                            </div>
+                            
+                            <div class="game-result-area" id="vocab-result" style="display: none;">
+                                <div class="game-score" id="vocab-score">太棒了！你答对了！</div>
+                                <p class="game-message translatable" data-en="The correct answer is:" data-zh="正确答案是：">正确答案是：<strong id="correct-vocab">苹果</strong></p>
+                                <button class="game-btn" id="next-vocab-btn"><i class="fas fa-redo"></i> <span class="translatable" data-en="Next Word" data-zh="下一个单词">下一个单词</span></button>
+                            </div>
+                            
+                            <div class="game-controls">
+                                <button class="game-btn" id="check-vocab-btn"><i class="fas fa-check"></i> <span class="translatable" data-en="Check Answer" data-zh="检查答案">检查答案</span></button>
+                                <button class="game-btn secondary" id="reset-vocab-btn"><i class="fas fa-sync"></i> <span class="translatable" data-en="Restart" data-zh="重新开始">重新开始</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 句子选择题 -->
+                    <div class="game-area" id="sentence-game">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--primary);" class="translatable" data-en="Sentence Choice Game" data-zh="语法判断题">语法判断题</h3>
+                        <p style="text-align: center; margin-bottom: 30px; color: var(--light-text);" class="translatable" data-en="Choose the correct Chinese sentence" data-zh="请选择正确的中文句子">
+                            请选择正确的中文句子
+                        </p>
+                        
+                        <div class="sentence-game-container">
+                            <div class="sentence-prompt" id="sentence-prompt">
+                                <span class="translatable" data-en="Which sentence is correct?" data-zh="你觉得下列哪句话是对的？">你觉得下列哪句话是对的？</span>
+                            </div>
+                            
+                            <div class="sentence-options" id="sentence-options">
+                                <div class="sentence-option" data-correct="true">我爱学习汉语。</div>
+                                <div class="sentence-option">他喜欢踢足球篮球。</div>
+                                <div class="sentence-option">苹果是蓝色的。</div>
+                                <div class="sentence-option">太阳从西边升起。</div>
+                            </div>
+                            
+                            <div class="game-result-area" id="sentence-result" style="display: none;">
+                                <div class="game-score translatable" data-en="Answer is" data-zh="回答">回答 <span id="sentence-score" style="color: var(--success);" class="translatable" data-en="Correct!" data-zh="正确">正确</span>！</div>
+                                <p class="game-message translatable" data-en="The correct answer is:" data-zh="正确答案是：">正确答案是：<strong id="correct-sentence">我爱学习汉语。</strong></p>
+                                <button class="game-btn" id="next-sentence-btn"><i class="fas fa-arrow-right"></i> <span class="translatable" data-en="Next Question" data-zh="下一题">下一题</span></button>
+                            </div>
+                            
+                            <div class="game-controls">
+                                <button class="game-btn" id="check-sentence-btn"><i class="fas fa-check"></i> <span class="translatable" data-en="Check Answer" data-zh="检查答案">检查答案</span></button>
+                                <button class="game-btn secondary" id="reset-sentence-btn"><i class="fas fa-sync"></i> <span class="translatable" data-en="Restart" data-zh="重新开始">重新开始</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 看图选择题 -->
+                    <div class="game-area" id="picture-game">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--success);" class="translatable" data-en="Picture Choice Game" data-zh="看图选择题">看图选择题</h3>
+                        <p style="text-align: center; margin-bottom: 30px; color: var(--light-text);" class="translatable" data-en="Choose the correct Chinese word for the picture" data-zh="根据图片选择正确的中文词汇">
+                            根据图片选择正确的中文词汇
+                        </p>
+                        
+                        <div class="picture-container">
+                            <div class="picture-prompt" id="picture-prompt">
+                                <span class="translatable" data-en="What is this in Chinese?" data-zh="这个用中文怎么说？">这个用中文怎么说？</span>
+                            </div>
+                            
+                            <div class="picture-area">
+                                <div class="picture-display">
+                                    <i class="fas fa-cat"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="picture-options" id="picture-options">
+                                <div class="picture-option" data-correct="true">猫</div>
+                                <div class="picture-option">狗</div>
+                                <div class="picture-option">鸟</div>
+                                <div class="picture-option">鱼</div>
+                            </div>
+                            
+                            <div class="game-result-area" id="picture-result" style="display: none;">
+                                <div class="game-score" id="picture-score">太棒了！你答对了！</div>
+                                <p class="game-message translatable" data-en="The correct answer is:" data-zh="正确答案是：">正确答案是：<strong id="correct-picture">猫</strong></p>
+                                <button class="game-btn" id="next-picture-btn"><i class="fas fa-arrow-right"></i> <span class="translatable" data-en="Next Picture" data-zh="下一张图片">下一张图片</span></button>
+                            </div>
+                            
+                            <div class="game-controls">
+                                <button class="game-btn" id="check-picture-btn"><i class="fas fa-check"></i> <span class="translatable" data-en="Check Answer" data-zh="检查答案">检查答案</span></button>
+                                <button class="game-btn secondary" id="reset-picture-btn"><i class="fas fa-sync"></i> <span class="translatable" data-en="Restart" data-zh="重新开始">重新开始</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 新增：文化知识游戏 -->
+                    <div class="game-area" id="culture-game">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--orange);" class="translatable" data-en="Chinese Culture Game" data-zh="中国文化知识">中国文化知识</h3>
+                        <p style="text-align: center; margin-bottom: 30px; color: var(--light-text);" class="translatable" data-en="Learn about Chinese culture through pictures and questions" data-zh="通过图片和问题了解中国文化">
+                            通过图片和问题了解中国文化
+                        </p>
+                        
+                        <div class="culture-container">
+                            <div class="culture-prompt" id="culture-prompt">
+                                <span class="translatable" data-en="What is this cultural item?" data-zh="这是什么文化物品？">这是什么文化物品？</span>
+                            </div>
+                            
+                            <div class="culture-image" id="culture-image">
+                                <!-- 图片将通过JavaScript动态加载 -->
+                            </div>
+                            
+                            <div class="culture-options" id="culture-options">
+                                <div class="culture-option" data-correct="true">中国结</div>
+                                <div class="culture-option">风筝</div>
+                                <div class="culture-option">茶叶</div>
+                                <div class="culture-option">对联</div>
+                            </div>
+                            
+                            <div class="game-result-area" id="culture-result" style="display: none;">
+                                <div class="game-score" id="culture-score">太棒了！你答对了！</div>
+                                <p class="game-message translatable" data-en="The correct answer is:" data-zh="正确答案是：">正确答案是：<strong id="correct-culture">中国结</strong></p>
+                                <button class="game-btn" id="next-culture-btn"><i class="fas fa-arrow-right"></i> <span class="translatable" data-en="Next Question" data-zh="下一题">下一题</span></button>
+                            </div>
+                            
+                            <div class="game-controls">
+                                <button class="game-btn" id="check-culture-btn"><i class="fas fa-check"></i> <span class="translatable" data-en="Check Answer" data-zh="检查答案">检查答案</span></button>
+                                <button class="game-btn secondary" id="reset-culture-btn"><i class="fas fa-sync"></i> <span class="translatable" data-en="Restart" data-zh="重新开始">重新开始</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 新增：语音选择题 -->
+                    <div class="game-area" id="audio-game">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--pink);" class="translatable" data-en="Audio Choice Game" data-zh="语音选择题">语音选择题</h3>
+                        <p style="text-align: center; margin-bottom: 30px; color: var(--light-text);" class="translatable" data-en="Listen to the audio and choose the correct Chinese word" data-zh="听语音选择正确的中文词汇">
+                            听语音选择正确的中文词汇
+                        </p>
+                        
+                        <div class="audio-container">
+                            <div class="audio-prompt" id="audio-prompt">
+                                <span class="translatable" data-en="Listen to the audio and choose the correct word" data-zh="请听语音并选择正确的词语">请听语音并选择正确的词语</span>
+                            </div>
+                            
+                            <div class="audio-player">
+                                <button class="play-button" id="play-audio-btn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="audio-options" id="audio-options">
+                                <div class="audio-option" data-correct="true">苹果</div>
+                                <div class="audio-option">香蕉</div>
+                                <div class="audio-option">橘子</div>
+                                <div class="audio-option">葡萄</div>
+                            </div>
+                            
+                            <div class="game-result-area" id="audio-result" style="display: none;">
+                                <div class="game-score" id="audio-score">太棒了！你答对了！</div>
+                                <p class="game-message translatable" data-en="The correct answer is:" data-zh="正确答案是：">正确答案是：<strong id="correct-audio">苹果</strong></p>
+                                <button class="game-btn" id="next-audio-btn"><i class="fas fa-arrow-right"></i> <span class="translatable" data-en="Next Word" data-zh="下一个单词">下一个单词</span></button>
+                            </div>
+                            
+                            <div class="game-controls">
+                                <button class="game-btn" id="check-audio-btn"><i class="fas fa-check"></i> <span class="translatable" data-en="Check Answer" data-zh="检查答案">检查答案</span></button>
+                                <button class="game-btn secondary" id="reset-audio-btn"><i class="fas fa-sync"></i> <span class="translatable" data-en="Restart" data-zh="重新开始">重新开始</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 汉字配对游戏 -->
+                    <div class="game-area" id="matching-game">
+                        <h3 style="text-align: center; margin-bottom: 20px; color: var(--pink);" class="translatable" data-en="Chinese Matching Game" data-zh="汉字配对游戏">汉字配对游戏</h3>
+                        <p style="text-align: center; margin-bottom: 30px; color: var(--light-text);" class="translatable" data-en="Match Chinese words with their English meanings" data-zh="将中文词汇与对应的英文释义进行配对">
+                            将中文词汇与对应的英文释义进行配对
+                        </p>
+                        
+                        <div class="matching-container">
+                            <div class="matching-prompt" id="matching-prompt">
+                                <span class="translatable" data-en="Match the Chinese words with their English meanings" data-zh="请将中文词汇与对应的英文释义进行配对">请将中文词汇与对应的英文释义进行配对</span>
+                            </div>
+                            
+                            <div class="matching-grid" id="matching-grid">
+                                <div class="matching-column" id="chinese-column">
+                                    <!-- 中文词汇将通过JavaScript动态生成 -->
+                                </div>
+                                <div class="matching-column" id="english-column">
+                                    <!-- 英文释义将通过JavaScript动态生成 -->
+                                </div>
+                            </div>
+                            
+                            <div class="game-result-area" id="matching-result" style="display: none;">
+                                <div class="game-score translatable" data-en="Congratulations! All matches are correct!" data-zh="恭喜！所有配对都正确！">恭喜！所有配对都正确！</div>
+                                <p class="game-message translatable" data-en="You've successfully matched all the words!" data-zh="你已成功完成所有配对！">你已成功完成所有配对！</p>
+                                <button class="game-btn" id="next-matching-btn"><i class="fas fa-arrow-right"></i> <span class="translatable" data-en="Next Set" data-zh="下一组">下一组</span></button>
+                            </div>
+                            
+                            <div class="game-controls">
+                                <button class="game-btn" id="check-matching-btn"><i class="fas fa-check"></i> <span class="translatable" data-en="Check Matches" data-zh="检查配对">检查配对</span></button>
+                                <button class="game-btn secondary" id="reset-matching-btn"><i class="fas fa-sync"></i> <span class="translatable" data-en="Restart" data-zh="重新开始">重新开始</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 教学辅助区域 -->
+        <section class="teacher-assistance">
+            <div class="container assistance-container">
+                <h2 class="section-title translatable" data-en="Teacher Resources" data-zh="教学辅助资源">教学辅助资源</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 30px; color: rgba(255,255,255,0.9);" class="translatable" data-en="Game teaching guides and suggestions for teachers" data-zh="为教师提供的游戏教学指导和使用建议">
+                    为教师提供的游戏教学指导和使用建议
+                </p>
+                
+                <div class="assistance-grid">
+                    <div class="assistance-card">
+                        <h3 class="assistance-title"><i class="fas fa-lightbulb"></i> <span class="translatable" data-en="Teacher Tips" data-zh="教师使用建议">教师使用建议</span></h3>
+                        <div class="assistance-content">
+                            <div class="suggestion-item translatable" data-en="Introduce game rules and learning objectives before class starts" data-zh="在课堂开始前，花5分钟介绍游戏规则和学习目标">在课堂开始前，花5分钟介绍游戏规则和学习目标</div>
+                            <div class="suggestion-item translatable" data-en="Divide students into groups of 2-4 to promote collaborative learning" data-zh="将学生分成2-4人的小组进行游戏，促进合作学习">将学生分成2-4人的小组进行游戏，促进合作学习</div>
+                            <div class="suggestion-item translatable" data-en="Organize a short discussion after the game for students to share what they learned" data-zh="游戏结束后，组织简短的讨论，让学生分享学习收获">游戏结束后，组织简短的讨论，让学生分享学习收获</div>
+                            <div class="suggestion-item translatable" data-en="Adjust game difficulty based on student level to ensure participation" data-zh="根据学生水平调整游戏难度，确保所有学生都能参与">根据学生水平调整游戏难度，确保所有学生都能参与</div>
+                            <div class="suggestion-item translatable" data-en="Connect games with course content to enhance learning" data-zh="将游戏与课程内容结合，强化学习效果">将游戏与课程内容结合，强化学习效果</div>
+                        </div>
+                    </div>
+                    
+                    <div class="assistance-card">
+                        <h3 class="assistance-title"><i class="fas fa-book"></i> <span class="translatable" data-en="Game Teaching Guide" data-zh="游戏教学指南">游戏教学指南</span></h3>
+                        <div class="assistance-content">
+                            <div class="suggestion-item translatable" data-en="Vocabulary Games: Suitable for learning new words, use 1-2 times per lesson" data-zh="词汇游戏：适合学习新词汇，建议每节课使用1-2次">词汇游戏：适合学习新词汇，建议每节课使用1-2次</div>
+                            <div class="suggestion-item translatable" data-en="Sentence Games: Good for practicing grammar, can be used as warm-up activities" data-zh="句子游戏：适合练习语法，可作为课堂热身活动">句子游戏：适合练习语法，可作为课堂热身活动</div>
+                            <div class="suggestion-item translatable" data-en="Picture Choice: Visual learning, great for vocabulary review" data-zh="看图选择：视觉学习，非常适合词汇复习">看图选择：视觉学习，非常适合词汇复习</div>
+                            <div class="suggestion-item translatable" data-en="Culture Games: Help students understand Chinese culture, good for cultural lessons" data-zh="文化游戏：帮助学生了解中国文化，适合文化课">文化游戏：帮助学生了解中国文化，适合文化课</div>
+                            <div class="suggestion-item translatable" data-en="Audio Games: Improve listening skills, good for pronunciation practice" data-zh="语音游戏：提高听力技能，适合发音练习">语音游戏：提高听力技能，适合发音练习</div>
+                            <div class="suggestion-item translatable" data-en="Matching Games: Reinforce vocabulary connections, good for assessment" data-zh="配对游戏：强化词汇联系，适合评估">配对游戏：强化词汇联系，适合评估</div>
+                            <div class="suggestion-item translatable" data-en="Keep each game session to 15-20 minutes to maintain student focus" data-zh="每次游戏时间控制在15-20分钟，保持学生专注度">每次游戏时间控制在15-20分钟，保持学生专注度</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 教学反思区 -->
+                <div class="reflection-area">
+                    <h3 class="reflection-title"><i class="fas fa-edit"></i> <span class="translatable" data-en="Teaching Reflection" data-zh="教学反思区">教学反思区</span></h3>
+                    <p style="margin-bottom: 20px; color: var(--light-text);" class="translatable" data-en="Share your game teaching experience and suggestions to help improve our resources" data-zh="分享您的游戏教学经验、反思和建议，帮助改进我们的游戏资源">
+                        分享您的游戏教学经验、反思和建议，帮助改进我们的游戏资源
+                    </p>
+                    
+                    <form id="reflectionForm">
+                        <textarea placeholder="请分享您的游戏教学经验、学生反馈以及改进建议..." class="translatable" data-en="Please share your teaching experience, student feedback and suggestions..." data-zh="请分享您的游戏教学经验、学生反馈以及改进建议..."></textarea>
+                        <button type="submit" class="submit-btn"><span class="translatable" data-en="Submit Reflection" data-zh="提交反思">提交反思</span></button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h2>CHINESE FOR KIDS</h2>
+                <p class="translatable" data-en="2025 International Education Resource Center" data-zh="2025通向国际教育资源中心">2025通向国际教育资源中心</p>
+                <div class="social-links">
+                    <a href="https://weixin.qq.com/"><i class="fab fa-weixin"></i></a>
+                    <a href="https://im.qq.com/index/"><i class="fab fa-qq"></i></a>
+                    <a href="https://weibo.com/"><i class="fab fa-weibo"></i></a>
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 <span class="translatable" data-en="Chinese For Kids" data-zh="儿童汉语学习平台">儿童汉语学习平台</span> <span class="translatable" data-en="All Rights Reserved" data-zh="版权所有">版权所有</span>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 主题切换按钮 -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <!-- 语言切换通知 -->
+    <div class="language-notification" id="langNotification">
+        <span class="translatable" data-en="Language changed successfully!" data-zh="语言切换成功！">语言切换成功！</span>
+    </div>
+    <script>
+        // ==================== 语言切换功能 ====================
+        let currentLanguage = 'zh'; // 默认中文
+        
+        // 语言切换按钮事件
+        document.getElementById('langToggle').addEventListener('click', function() {
+            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+            translatePage();
+            showLanguageNotification();
+            
+            // 保存语言偏好
+            localStorage.setItem('languagePreference', currentLanguage);
+        });
+        
+        // 翻译页面
+        function translatePage() {
+            const translatableElements = document.querySelectorAll('.translatable');
+            
+            translatableElements.forEach(element => {
+                const translation = currentLanguage === 'zh' ? 
+                    element.getAttribute('data-zh') : 
+                    element.getAttribute('data-en');
+                
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    element.placeholder = translation;
+                } else {
+                    element.textContent = translation;
+                }
+            });
+        }
+        
+        // 显示语言切换通知
+        function showLanguageNotification() {
+            const notification = document.getElementById('langNotification');
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 2000);
+        }
+        
+        // 检查保存的语言偏好
+        const savedLanguage = localStorage.getItem('languagePreference');
+        if (savedLanguage) {
+            currentLanguage = savedLanguage;
+            translatePage();
+        }
+        
+        // ==================== 主题切换功能 ====================
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        // 检查保存的主题偏好
+        const savedTheme = localStorage.getItem('themePreference');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('themePreference', 'dark');
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('themePreference', 'light');
+            }
+        });
+        
+        // =============== 互动小游戏逻辑 ===============
+        // 游戏标签切换
+        const gameTabs = document.querySelectorAll('.mini-game-tab');
+        const gameAreas = document.querySelectorAll('.game-area');
+        
+        gameTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const gameId = this.dataset.game;
+                
+                // 更新标签状态
+                gameTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 显示对应的游戏区域
+                gameAreas.forEach(area => area.classList.remove('active'));
+                document.getElementById(`${gameId}-game`).classList.add('active');
+            });
+        });
+        
+        // ------------ 词汇选择题逻辑 ------------
+        const vocabOptions = document.querySelectorAll('.vocab-option');
+        const vocabResult = document.getElementById('vocab-result');
+        const nextVocabBtn = document.getElementById('next-vocab-btn');
+        const checkVocabBtn = document.getElementById('check-vocab-btn');
+        const resetVocabBtn = document.getElementById('reset-vocab-btn');
+        const correctVocab = document.getElementById('correct-vocab');
+        const vocabWord = document.getElementById('vocab-word');
+        const vocabPrompt = document.getElementById('vocab-prompt');
+        const vocabScore = document.getElementById('vocab-score');
+        
+        // 词汇数据
+        const vocabData = [
+            { english: "Apple", chinese: "苹果" },
+            { english: "Book", chinese: "书" },
+            { english: "Water", chinese: "水" },
+            { english: "School", chinese: "学校" },
+            { english: "Teacher", chinese: "老师" },
+            { english: "Friend", chinese: "朋友" },
+            { english: "Cat", chinese: "猫" },
+            { english: "Dog", chinese: "狗" }
+        ];
+        
+        let currentVocabIndex = 0;
+        let selectedVocabOption = null;
+        
+        // 初始化词汇选择题
+        function initVocabGame() {
+            currentVocabIndex = Math.floor(Math.random() * vocabData.length);
+            const currentVocab = vocabData[currentVocabIndex];
+            
+            // 重置状态
+            vocabResult.style.display = 'none';
+            vocabOptions.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.style.pointerEvents = 'auto';
+            });
+            
+            // 设置提示
+            if (currentLanguage === 'zh') {
+                vocabPrompt.innerHTML = '请选择英文单词对应的中文：<br><strong>' + currentVocab.english + '</strong>';
+                vocabWord.textContent = currentVocab.english;
+            } else {
+                vocabPrompt.innerHTML = 'Select the Chinese word for:<br><strong>' + currentVocab.english + '</strong>';
+                vocabWord.textContent = currentVocab.english;
+            }
+            
+            // 设置选项
+            const options = [];
+            options.push(currentVocab.chinese);
+            
+            // 添加错误选项
+            while (options.length < 4) {
+                const wrongWord = vocabData[Math.floor(Math.random() * vocabData.length)];
+                if (!options.includes(wrongWord.chinese) && wrongWord.chinese !== currentVocab.chinese) {
+                    options.push(wrongWord.chinese);
+                }
+            }
+            
+            // 打乱选项顺序
+            options.sort(() => Math.random() - 0.5);
+            
+            vocabOptions.forEach((opt, index) => {
+                opt.textContent = options[index];
+                if (opt.textContent === currentVocab.chinese) {
+                    opt.setAttribute('data-correct', 'true');
+                } else {
+                    opt.removeAttribute('data-correct');
+                }
+            });
+            
+            selectedVocabOption = null;
+        }
+        
+        // 检查词汇答案
+        function checkVocabAnswer() {
+            if (!selectedVocabOption) {
+                alert(currentLanguage === 'zh' ? '请选择一个选项！' : 'Please select an option!');
+                return;
+            }
+            
+            const isCorrect = selectedVocabOption.getAttribute('data-correct') === 'true';
+            
+            // 禁用所有选项
+            vocabOptions.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // 标记正确和错误
+            vocabOptions.forEach(opt => {
+                if (opt.getAttribute('data-correct') === 'true') {
+                    opt.classList.add('correct');
+                } else if (opt === selectedVocabOption) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示结果
+            vocabResult.style.display = 'block';
+            correctVocab.textContent = vocabData[currentVocabIndex].chinese;
+            
+            // 根据答案正确与否显示不同消息
+            if (isCorrect) {
+                vocabScore.textContent = currentLanguage === 'zh' ? '太棒了！你答对了！' : 'Great job! You got it right!';
+                vocabScore.style.color = '#27ae60';
+            } else {
+                vocabScore.textContent = currentLanguage === 'zh' ? '再试一次吧！' : 'Try again!';
+                vocabScore.style.color = '#e74c3c';
+            }
+        }
+        
+        // 事件监听
+        vocabOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // 移除之前的选择
+                vocabOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // 设置当前选择
+                option.classList.add('selected');
+                selectedVocabOption = option;
+            });
+        });
+        
+        checkVocabBtn.addEventListener('click', checkVocabAnswer);
+        nextVocabBtn.addEventListener('click', initVocabGame);
+        resetVocabBtn.addEventListener('click', initVocabGame);
+        
+        // 初始化词汇选择题
+        initVocabGame();
+        
+        // ------------ 句子选择题逻辑 ------------
+        const sentenceOptions = document.querySelectorAll('.sentence-option');
+        const sentenceResult = document.getElementById('sentence-result');
+        const nextSentenceBtn = document.getElementById('next-sentence-btn');
+        const checkSentenceBtn = document.getElementById('check-sentence-btn');
+        const resetSentenceBtn = document.getElementById('reset-sentence-btn');
+        const correctSentenceEl = document.getElementById('correct-sentence');
+        const sentenceScoreEl = document.getElementById('sentence-score');
+        const sentencePrompt = document.getElementById('sentence-prompt');
+        
+        // 句子选择题数据
+        const sentenceData = [
+            {
+                question: "Which sentence is correct?",
+                options: [
+                    "我爱学习汉语。",
+                    "他喜欢踢足球篮球。",
+                    "苹果是蓝色的。",
+                    "太阳从西边升起。"
+                ],
+                correct: 0
+            },
+            {
+                question: "Choose the correct sentence:",
+                options: [
+                    "妈妈在厨房做饭。",
+                    "汽车在天上飞。",
+                    "鱼在树上爬。",
+                    "我每天吃石头。"
+                ],
+                correct: 0
+            },
+            {
+                question: "Which sentence expresses the correct meaning?",
+                options: [
+                    "小狗在公园里玩耍。",
+                    "书在河里游泳。",
+                    "椅子会唱歌跳舞。",
+                    "铅笔吃苹果。"
+                ],
+                correct: 0
+            }
+        ];
+        
+        let currentSentenceIndex = 0;
+        let selectedSentenceOption = null;
+        
+        // 初始化句子选择题
+        function initSentenceGame() {
+            const currentSentence = sentenceData[currentSentenceIndex];
+            
+            // 重置状态
+            sentenceResult.style.display = 'none';
+            sentenceOptions.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.style.pointerEvents = 'auto';
+            });
+            
+            // 设置提示
+            if (currentLanguage === 'zh') {
+                sentencePrompt.textContent = currentSentenceIndex === 0 ? 
+                    "你觉得下列哪句话是对的？" : 
+                    "请选择正确的句子";
+            } else {
+                sentencePrompt.textContent = currentSentence.question;
+            }
+            
+            // 设置选项
+            sentenceOptions.forEach((opt, index) => {
+                opt.textContent = currentSentence.options[index];
+                opt.dataset.index = index;
+            });
+            
+            selectedSentenceOption = null;
+        }
+        
+        // 检查句子答案
+        function checkSentenceAnswer() {
+            if (!selectedSentenceOption) {
+                alert(currentLanguage === 'zh' ? '请选择一个选项！' : 'Please select an option!');
+                return;
+            }
+            
+            const selectedIndex = parseInt(selectedSentenceOption.dataset.index);
+            const isCorrect = selectedIndex === sentenceData[currentSentenceIndex].correct;
+            
+            // 禁用所有选项
+            sentenceOptions.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // 标记正确和错误
+            sentenceOptions.forEach(opt => {
+                const index = parseInt(opt.dataset.index);
+                if (index === sentenceData[currentSentenceIndex].correct) {
+                    opt.classList.add('correct');
+                } else if (opt === selectedSentenceOption) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示结果
+            sentenceResult.style.display = 'block';
+            if (isCorrect) {
+                sentenceScoreEl.textContent = currentLanguage === 'zh' ? '正确' : 'Correct';
+                sentenceScoreEl.style.color = '#27ae60';
+            } else {
+                sentenceScoreEl.textContent = currentLanguage === 'zh' ? '错误' : 'Incorrect';
+                sentenceScoreEl.style.color = '#e74c3c';
+            }
+            correctSentenceEl.textContent = sentenceData[currentSentenceIndex].options[sentenceData[currentSentenceIndex].correct];
+        }
+        
+        // 事件监听
+        sentenceOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // 移除之前的选择
+                sentenceOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // 设置当前选择
+                option.classList.add('selected');
+                selectedSentenceOption = option;
+            });
+        });
+        
+        checkSentenceBtn.addEventListener('click', checkSentenceAnswer);
+        nextSentenceBtn.addEventListener('click', function() {
+            currentSentenceIndex = (currentSentenceIndex + 1) % sentenceData.length;
+            initSentenceGame();
+        });
+        resetSentenceBtn.addEventListener('click', function() {
+            currentSentenceIndex = 0;
+            initSentenceGame();
+        });
+        
+        // 初始化句子选择题
+        initSentenceGame();
+        
+        // ------------ 看图选择题逻辑 ------------
+        const pictureOptions = document.querySelectorAll('.picture-option');
+        const pictureResult = document.getElementById('picture-result');
+        const nextPictureBtn = document.getElementById('next-picture-btn');
+        const checkPictureBtn = document.getElementById('check-picture-btn');
+        const resetPictureBtn = document.getElementById('reset-picture-btn');
+        const correctPicture = document.getElementById('correct-picture');
+        const picturePrompt = document.getElementById('picture-prompt');
+        const pictureDisplay = document.querySelector('.picture-display');
+        const pictureScore = document.getElementById('picture-score');
+        
+        // 图片选择题数据
+        const pictureData = [
+            { icon: "fa-cat", chinese: "猫" },
+            { icon: "fa-dog", chinese: "狗" },
+            { icon: "fa-book", chinese: "书" },
+            { icon: "fa-apple-alt", chinese: "苹果" },
+            { icon: "fa-car", chinese: "汽车" },
+            { icon: "fa-tree", chinese: "树" },
+            { icon: "fa-home", chinese: "家" },
+            { icon: "fa-sun", chinese: "太阳" }
+        ];
+        
+        let currentPictureIndex = 0;
+        let selectedPictureOption = null;
+        
+        // 初始化看图选择题
+        function initPictureGame() {
+            currentPictureIndex = Math.floor(Math.random() * pictureData.length);
+            const currentPicture = pictureData[currentPictureIndex];
+            
+            // 重置状态
+            pictureResult.style.display = 'none';
+            pictureOptions.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.style.pointerEvents = 'auto';
+            });
+            
+            // 设置提示
+            if (currentLanguage === 'zh') {
+                picturePrompt.textContent = "这个用中文怎么说？";
+            } else {
+                picturePrompt.textContent = "What is this in Chinese?";
+            }
+            
+            // 设置图片
+            pictureDisplay.innerHTML = `<i class="fas ${currentPicture.icon}"></i>`;
+            
+            // 设置选项
+            const options = [];
+            options.push(currentPicture.chinese);
+            
+            // 添加错误选项
+            while (options.length < 4) {
+                const wrongPicture = pictureData[Math.floor(Math.random() * pictureData.length)];
+                if (!options.includes(wrongPicture.chinese) && wrongPicture.chinese !== currentPicture.chinese) {
+                    options.push(wrongPicture.chinese);
+                }
+            }
+            
+            // 打乱选项顺序
+            options.sort(() => Math.random() - 0.5);
+            
+            pictureOptions.forEach((opt, index) => {
+                opt.textContent = options[index];
+                if (opt.textContent === currentPicture.chinese) {
+                    opt.setAttribute('data-correct', 'true');
+                } else {
+                    opt.removeAttribute('data-correct');
+                }
+            });
+            
+            selectedPictureOption = null;
+        }
+        
+        // 检查图片答案
+        function checkPictureAnswer() {
+            if (!selectedPictureOption) {
+                alert(currentLanguage === 'zh' ? '请选择一个选项！' : 'Please select an option!');
+                return;
+            }
+            
+            const isCorrect = selectedPictureOption.getAttribute('data-correct') === 'true';
+            
+            // 禁用所有选项
+            pictureOptions.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // 标记正确和错误
+            pictureOptions.forEach(opt => {
+                if (opt.getAttribute('data-correct') === 'true') {
+                    opt.classList.add('correct');
+                } else if (opt === selectedPictureOption) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示结果
+            pictureResult.style.display = 'block';
+            correctPicture.textContent = pictureData[currentPictureIndex].chinese;
+            
+            // 根据答案正确与否显示不同消息
+            if (isCorrect) {
+                pictureScore.textContent = currentLanguage === 'zh' ? '太棒了！你答对了！' : 'Excellent! That\'s correct!';
+                pictureScore.style.color = '#27ae60';
+            } else {
+                pictureScore.textContent = currentLanguage === 'zh' ? '再试一次吧！' : 'Try again!';
+                pictureScore.style.color = '#e74c3c';
+            }
+        }
+        
+        // 事件监听
+        pictureOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // 移除之前的选择
+                pictureOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // 设置当前选择
+                option.classList.add('selected');
+                selectedPictureOption = option;
+            });
+        });
+        
+        checkPictureBtn.addEventListener('click', checkPictureAnswer);
+        nextPictureBtn.addEventListener('click', initPictureGame);
+        resetPictureBtn.addEventListener('click', initPictureGame);
+        
+        // 初始化看图选择题
+        initPictureGame();
+        
+        // ------------ 新增：文化知识游戏逻辑 ------------
+        const cultureOptions = document.querySelectorAll('.culture-option');
+        const cultureResult = document.getElementById('culture-result');
+        const nextCultureBtn = document.getElementById('next-culture-btn');
+        const checkCultureBtn = document.getElementById('check-culture-btn');
+        const resetCultureBtn = document.getElementById('reset-culture-btn');
+        const correctCulture = document.getElementById('correct-culture');
+        const culturePrompt = document.getElementById('culture-prompt');
+        const cultureImage = document.getElementById('culture-image');
+        const cultureScore = document.getElementById('culture-score');
+        
+        // 文化知识游戏数据 - 使用指定的图片
+        const cultureData = [
+            { 
+                question: "What is this cultural item?",
+                chinese: "中国结",
+                image: "zhongguojie.png",
+                options: ["中国结", "风筝", "茶叶", "对联"]
+            },
+            { 
+                question: "What is this cultural item?",
+                chinese: "风筝",
+                image: "fengzheng.png",
+                options: ["风筝", "中国结", "茶叶", "印章"]
+            },
+            { 
+                question: "What is this cultural item?",
+                chinese: "茶叶",
+                image: "chaye.png",
+                options: ["茶叶", "对联", "中国结", "风筝"]
+            },
+            { 
+                question: "What is this cultural item?",
+                chinese: "对联",
+                image: "duilian.png",
+                options: ["对联", "印章", "风筝", "茶叶"]
+            },
+            { 
+                question: "What is this cultural item?",
+                chinese: "印章",
+                image: "yinzhang.png",
+                options: ["印章", "中国结", "茶叶", "对联"]
+            }
+        ];
+        
+        let currentCultureIndex = 0;
+        let selectedCultureOption = null;
+        
+        // 初始化文化知识游戏
+        function initCultureGame() {
+            currentCultureIndex = Math.floor(Math.random() * cultureData.length);
+            const currentCulture = cultureData[currentCultureIndex];
+            
+            // 重置状态
+            cultureResult.style.display = 'none';
+            cultureOptions.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.style.pointerEvents = 'auto';
+            });
+            
+            // 设置提示
+            if (currentLanguage === 'zh') {
+                culturePrompt.textContent = "这是什么文化物品？";
+            } else {
+                culturePrompt.textContent = currentCulture.question;
+            }
+            
+            // 设置图片
+            cultureImage.innerHTML = `<img src="${currentCulture.image}" alt="${currentCulture.chinese}">`;
+            
+            // 设置选项
+            const options = [...currentCulture.options];
+            // 打乱选项顺序
+            options.sort(() => Math.random() - 0.5);
+            
+            cultureOptions.forEach((opt, index) => {
+                opt.textContent = options[index];
+                if (opt.textContent === currentCulture.chinese) {
+                    opt.setAttribute('data-correct', 'true');
+                } else {
+                    opt.removeAttribute('data-correct');
+                }
+            });
+            
+            selectedCultureOption = null;
+        }
+        
+        // 检查文化知识答案
+        function checkCultureAnswer() {
+            if (!selectedCultureOption) {
+                alert(currentLanguage === 'zh' ? '请选择一个选项！' : 'Please select an option!');
+                return;
+            }
+            
+            const isCorrect = selectedCultureOption.getAttribute('data-correct') === 'true';
+            
+            // 禁用所有选项
+            cultureOptions.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // 标记正确和错误
+            cultureOptions.forEach(opt => {
+                if (opt.getAttribute('data-correct') === 'true') {
+                    opt.classList.add('correct');
+                } else if (opt === selectedCultureOption) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示结果
+            cultureResult.style.display = 'block';
+            correctCulture.textContent = cultureData[currentCultureIndex].chinese;
+            
+            // 根据答案正确与否显示不同消息
+            if (isCorrect) {
+                cultureScore.textContent = currentLanguage === 'zh' ? '太棒了！你答对了！' : 'Great job! You got it right!';
+                cultureScore.style.color = '#27ae60';
+            } else {
+                cultureScore.textContent = currentLanguage === 'zh' ? '再试一次吧！' : 'Try again!';
+                cultureScore.style.color = '#e74c3c';
+            }
+        }
+        
+        // 事件监听
+        cultureOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // 移除之前的选择
+                cultureOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // 设置当前选择
+                option.classList.add('selected');
+                selectedCultureOption = option;
+            });
+        });
+        
+        checkCultureBtn.addEventListener('click', checkCultureAnswer);
+        nextCultureBtn.addEventListener('click', initCultureGame);
+        resetCultureBtn.addEventListener('click', initCultureGame);
+        
+        // 初始化文化知识游戏
+        initCultureGame();
+        
+        // ------------ 新增：语音选择题逻辑 ------------
+        const audioOptions = document.querySelectorAll('.audio-option');
+        const audioResult = document.getElementById('audio-result');
+        const nextAudioBtn = document.getElementById('next-audio-btn');
+        const checkAudioBtn = document.getElementById('check-audio-btn');
+        const resetAudioBtn = document.getElementById('reset-audio-btn');
+        const correctAudio = document.getElementById('correct-audio');
+        const audioPrompt = document.getElementById('audio-prompt');
+        const playAudioBtn = document.getElementById('play-audio-btn');
+        const audioScore = document.getElementById('audio-score');
+        
+        // 语音选择题数据
+        const audioData = [
+            { 
+                word: "苹果",
+                options: ["苹果", "香蕉", "橘子", "葡萄"]
+            },
+            { 
+                word: "书",
+                options: ["书", "笔", "纸", "桌子"]
+            },
+            { 
+                word: "水",
+                options: ["水", "火", "土", "空气"]
+            },
+            { 
+                word: "学校",
+                options: ["学校", "家", "公园", "商店"]
+            }
+        ];
+        
+        let currentAudioIndex = 0;
+        let selectedAudioOption = null;
+        
+        // 初始化语音选择题
+        function initAudioGame() {
+            currentAudioIndex = Math.floor(Math.random() * audioData.length);
+            const currentAudio = audioData[currentAudioIndex];
+            
+            // 重置状态
+            audioResult.style.display = 'none';
+            audioOptions.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.style.pointerEvents = 'auto';
+            });
+            
+            // 设置提示
+            if (currentLanguage === 'zh') {
+                audioPrompt.textContent = "请听语音并选择正确的词语";
+            } else {
+                audioPrompt.textContent = "Listen to the audio and choose the correct word";
+            }
+            
+            // 设置选项
+            const options = [...currentAudio.options];
+            // 打乱选项顺序
+            options.sort(() => Math.random() - 0.5);
+            
+            audioOptions.forEach((opt, index) => {
+                opt.textContent = options[index];
+                if (opt.textContent === currentAudio.word) {
+                    opt.setAttribute('data-correct', 'true');
+                } else {
+                    opt.removeAttribute('data-correct');
+                }
+            });
+            
+            selectedAudioOption = null;
+        }
+        
+        // 播放语音（模拟）
+        function playAudio() {
+            // 在实际应用中，这里会播放真实的音频文件
+            // 这里我们只是模拟播放效果
+            playAudioBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            playAudioBtn.style.backgroundColor = '#27ae60';
+            
+            setTimeout(() => {
+                playAudioBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playAudioBtn.style.backgroundColor = '#3498db';
+            }, 1500);
+        }
+        
+        // 检查语音答案
+        function checkAudioAnswer() {
+            if (!selectedAudioOption) {
+                alert(currentLanguage === 'zh' ? '请选择一个选项！' : 'Please select an option!');
+                return;
+            }
+            
+            const isCorrect = selectedAudioOption.getAttribute('data-correct') === 'true';
+            
+            // 禁用所有选项
+            audioOptions.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // 标记正确和错误
+            audioOptions.forEach(opt => {
+                if (opt.getAttribute('data-correct') === 'true') {
+                    opt.classList.add('correct');
+                } else if (opt === selectedAudioOption) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // 显示结果
+            audioResult.style.display = 'block';
+            correctAudio.textContent = audioData[currentAudioIndex].word;
+            
+            // 根据答案正确与否显示不同消息
+            if (isCorrect) {
+                audioScore.textContent = currentLanguage === 'zh' ? '太棒了！你答对了！' : 'Great job! You got it right!';
+                audioScore.style.color = '#27ae60';
+            } else {
+                audioScore.textContent = currentLanguage === 'zh' ? '再试一次吧！' : 'Try again!';
+                audioScore.style.color = '#e74c3c';
+            }
+        }
+        
+        // 事件监听
+        audioOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // 移除之前的选择
+                audioOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // 设置当前选择
+                option.classList.add('selected');
+                selectedAudioOption = option;
+            });
+        });
+        
+        playAudioBtn.addEventListener('click', playAudio);
+        checkAudioBtn.addEventListener('click', checkAudioAnswer);
+        nextAudioBtn.addEventListener('click', initAudioGame);
+        resetAudioBtn.addEventListener('click', initAudioGame);
+        
+        // 初始化语音选择题
+        initAudioGame();
+        
+        // ------------ 汉字配对游戏逻辑 ------------
+        const chineseColumn = document.getElementById('chinese-column');
+        const englishColumn = document.getElementById('english-column');
+        const matchingResult = document.getElementById('matching-result');
+        const nextMatchingBtn = document.getElementById('next-matching-btn');
+        const checkMatchingBtn = document.getElementById('check-matching-btn');
+        const resetMatchingBtn = document.getElementById('reset-matching-btn');
+        const matchingPrompt = document.getElementById('matching-prompt');
+        
+        // 配对游戏数据
+        const matchingData = [
+            { chinese: "苹果", english: "Apple" },
+            { chinese: "书", english: "Book" },
+            { chinese: "水", english: "Water" },
+            { chinese: "学校", english: "School" },
+            { chinese: "老师", english: "Teacher" },
+            { chinese: "朋友", english: "Friend" }
+        ];
+        
+        let selectedChinese = null;
+        let selectedEnglish = null;
+        let matchedPairs = 0;
+        
+        // 初始化配对游戏
+        function initMatchingGame() {
+            // 重置状态
+            matchingResult.style.display = 'none';
+            chineseColumn.innerHTML = '';
+            englishColumn.innerHTML = '';
+            selectedChinese = null;
+            selectedEnglish = null;
+            matchedPairs = 0;
+            
+            // 设置提示
+            if (currentLanguage === 'zh') {
+                matchingPrompt.textContent = "请将中文词汇与对应的英文释义进行配对";
+            } else {
+                matchingPrompt.textContent = "Match the Chinese words with their English meanings";
+            }
+            
+            // 创建中文词汇列表（打乱顺序）
+            const shuffledChinese = [...matchingData].sort(() => Math.random() - 0.5);
+            
+            // 创建英文释义列表（打乱顺序）
+            const shuffledEnglish = [...matchingData].sort(() => Math.random() - 0.5);
+            
+            // 添加中文词汇
+            shuffledChinese.forEach(item => {
+                const chineseItem = document.createElement('div');
+                chineseItem.className = 'matching-item';
+                chineseItem.textContent = item.chinese;
+                chineseItem.dataset.chinese = item.chinese;
+                chineseItem.addEventListener('click', selectChinese);
+                chineseColumn.appendChild(chineseItem);
+            });
+            
+            // 添加英文释义
+            shuffledEnglish.forEach(item => {
+                const englishItem = document.createElement('div');
+                englishItem.className = 'matching-item';
+                englishItem.textContent = item.english;
+                englishItem.dataset.chinese = item.chinese;
+                englishItem.addEventListener('click', selectEnglish);
+                englishColumn.appendChild(englishItem);
+            });
+        }
+        
+        // 选择中文词汇
+        function selectChinese() {
+            if (this.classList.contains('matched')) return;
+            
+            // 清除之前的选择
+            document.querySelectorAll('.matching-item.selected').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // 设置当前选择
+            this.classList.add('selected');
+            selectedChinese = this;
+            
+            // 检查是否已选择配对项
+            checkPair();
+        }
+        
+        // 选择英文释义
+        function selectEnglish() {
+            if (this.classList.contains('matched')) return;
+            
+            // 清除之前的选择
+            document.querySelectorAll('.matching-item.selected').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // 设置当前选择
+            this.classList.add('selected');
+            selectedEnglish = this;
+            
+            // 检查是否已选择配对项
+            checkPair();
+        }
+        
+        // 检查配对
+        function checkPair() {
+            if (selectedChinese && selectedEnglish) {
+                const isCorrect = selectedChinese.dataset.chinese === selectedEnglish.dataset.chinese;
+                
+                if (isCorrect) {
+                    selectedChinese.classList.remove('selected');
+                    selectedEnglish.classList.remove('selected');
+                    selectedChinese.classList.add('matched');
+                    selectedEnglish.classList.add('matched');
+                    matchedPairs++;
+                    
+                    // 检查是否所有配对都已完成
+                    if (matchedPairs === matchingData.length) {
+                        matchingResult.style.display = 'block';
+                    }
+                } else {
+                    selectedChinese.classList.add('incorrect');
+                    selectedEnglish.classList.add('incorrect');
+                    
+                    setTimeout(() => {
+                        selectedChinese.classList.remove('selected', 'incorrect');
+                        selectedEnglish.classList.remove('selected', 'incorrect');
+                    }, 1000);
+                }
+                
+                selectedChinese = null;
+                selectedEnglish = null;
+            }
+        }
+        
+        // 事件监听
+        checkMatchingBtn.addEventListener('click', function() {
+            // 检查所有配对是否正确
+            const allMatched = document.querySelectorAll('.matching-item.matched').length === matchingData.length * 2;
+            
+            if (allMatched) {
+                matchingResult.style.display = 'block';
+            } else {
+                alert(currentLanguage === 'zh' ? '请完成所有配对！' : 'Please complete all matches!');
+            }
+        });
+        
+        nextMatchingBtn.addEventListener('click', initMatchingGame);
+        resetMatchingBtn.addEventListener('click', initMatchingGame);
+        
+        // 初始化配对游戏
+        initMatchingGame();
+        
+        // 教学反思表单提交
+        const reflectionForm = document.getElementById('reflectionForm');
+        reflectionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const textarea = this.querySelector('textarea');
+            if (textarea.value.trim() === '') {
+                alert(currentLanguage === 'zh' ? '请填写您的反思内容' : 'Please fill in your reflection');
+                return;
+            }
+            
+            alert(currentLanguage === 'zh' ? 
+                '感谢您的宝贵意见！您的反思已提交成功。' : 
+                'Thank you for your valuable feedback! Your reflection has been submitted successfully.');
+            textarea.value = '';
+        });
+    </script>
+</body>
+</html>

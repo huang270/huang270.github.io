@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese For Kids | 儿童趣味汉语学习平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        /* 新增样式调整 */
+        .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 调整为更灵活的网格 */
+        }
+        
+        .platform-card {
+            height: 100%; /* 确保卡片高度一致 */
+        }
+        
+        .platform-logo {
+            height: 130px; /* 增加高度以容纳更多内容 */
+        }
+        
+        .platform-content {
+            padding: 15px;
+        }
+        
+        .platform-title {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .platform-desc {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .platform-features {
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .visit-btn {
+            margin-top: 15px;
+        }
+
+        :root {
+            --primary: #3498db;
+            --secondary: #f1c40f;
+            --accent: #e74c3c;
+            --light-bg: #f0f7ff;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --light-text: #7f8c8d;
+            --success: #2ecc71;
+            --pink: #ff9ff3;
+            --purple: #9b59b6;
+            --orange: #e67e22;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text);
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="3" fill="%23b3e5fc" opacity="0.3"/><circle cx="50" cy="50" r="2" fill="%23b3e5fc" opacity="0.3"/><circle cx="80" cy="30" r="4" fill="%23b3e5fc" opacity="0.3"/></svg>');
+            background-size: 120px 120px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--primary);
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .logo .for-kids {
+            color: var(--secondary);
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+            border-radius: 3px;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .lang-toggle {
+            background: none;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-toggle:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* 移动端菜单按钮 */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .menu-toggle:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            background: linear-gradient(135deg, #e0f7ff, #b3e5fc);
+            padding: 50px 0 70px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,5 C70,5 95,20 95,50 C95,80 70,95 50,95 C30,95 5,80 5,50 C5,20 30,5 50,5 Z" fill="none" stroke="%233498db" stroke-width="2" stroke-dasharray="5,5"/></svg>');
+            opacity: 0.1;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 150px;
+            height: 150px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="%23f1c40f" stroke-width="2" stroke-dasharray="5,5"/></svg>');
+            opacity: 0.1;
+            animation: rotate 20s linear infinite reverse;
+        }
+        
+        .hero-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            flex: 0 0 55%;
+        }
+        
+        .hero-heading {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 15px;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero-subheading {
+            font-size: 18px;
+            color: var(--light-text);
+            margin-bottom: 25px;
+            animation: fadeInUp 1s ease-out 0.2s;
+            animation-fill-mode: both;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--text);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(241, 196, 15, 0.4);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out 0.4s;
+            animation-fill-mode: both;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(241, 196, 15, 0.5);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transition: all 0.5s;
+            z-index: -1;
+        }
+        
+        .btn:hover::after {
+            width: 100%;
+        }
+        
+        .hero-graphics {
+            position: relative;
+            flex: 0 0 40%;
+            height: 350px;
+        }
+        
+        /* 学习动画容器 */
+        .learning-animation {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 熊猫角色 */
+        .panda {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 180px;
+            z-index: 3;
+        }
+        
+        .panda-head {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            top: 0;
+            left: 15px;
+            z-index: 2;
+        }
+        
+        .panda-ear {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: black;
+            border-radius: 50%;
+            top: -10px;
+        }
+        
+        .panda-ear.left {
+            left: 10px;
+        }
+        
+        .panda-ear.right {
+            right: 10px;
+        }
+        
+        .panda-eye {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: black;
+            border-radius: 50%;
+            top: 45px;
+        }
+        
+        .panda-eye.left {
+            left: 30px;
+        }
+        
+        .panda-eye.right {
+            right: 30px;
+        }
+        
+        .panda-eye-inner {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            top: 7px;
+            left: 7px;
+            animation: blink 4s infinite;
+        }
+        
+        .panda-nose {
+            position: absolute;
+            width: 25px;
+            height: 20px;
+            background: black;
+            border-radius: 50%;
+            top: 70px;
+            left: 60px;
+        }
+        
+        .panda-mouth {
+            position: absolute;
+            width: 40px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-bottom-color: black;
+            border-radius: 0 0 50% 50%;
+            top: 85px;
+            left: 50px;
+        }
+        
+        .panda-body {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            top: 90px;
+            left: 35px;
+            z-index: 1;
+        }
+        
+        .panda-arm {
+            position: absolute;
+            width: 20px;
+            height: 70px;
+            background: black;
+            border-radius: 10px;
+            top: 100px;
+            z-index: 2;
+        }
+        
+        .panda-arm.left {
+            left: 25px;
+            transform-origin: top center;
+            animation: waveLeft 3s infinite;
+        }
+        
+        .panda-arm.right {
+            right: 25px;
+            transform-origin: top center;
+            animation: waveRight 3s infinite;
+        }
+        
+        /* 书本 */
+        .book {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 80px;
+            background: #e74c3c;
+            border-radius: 5px;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .book::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background: rgba(0,0,0,0.1);
+            top: 20px;
+            left: 0;
+        }
+        
+        .book::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background: rgba(0,0,0,0.1);
+            top: 40px;
+            left: 0;
+        }
+        
+        .page {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background: #fff;
+            border-radius: 0 5px 5px 0;
+            top: 5px;
+            left: 60px;
+            transform-origin: left center;
+            animation: flipPage 6s infinite;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        
+        /* 汉字动画 */
+        .hanzi {
+            position: absolute;
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            opacity: 0.7;
+            animation: floatUp 8s infinite linear;
+        }
+        
+        /* 功能区域样式 */
+        .features-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .card-icon {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: var(--primary);
+            background: rgba(52, 152, 219, 0.1);
+            position: relative;
+        }
+        
+        .card-icon::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary);
+            opacity: 0.2;
+        }
+        
+        .card-content {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .card-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .card-desc {
+            color: var(--light-text);
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+        
+        /* 推荐资源区域 */
+        .resources-section {
+            margin-bottom: 60px;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .resource-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .resource-icon {
+            width: 90px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+        
+        .resource-content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .resource-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--text);
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .download-btn:hover {
+            background: #e6b800;
+            transform: scale(1.05);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 50px 0 20px;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+        
+        .footer-content {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* 移动端菜单 */
+        .mobile-menu {
+            display: none;
+            background: var(--card-bg);
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            z-index: 99;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+        }
+        
+        .mobile-menu ul li {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .mobile-menu ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* 动画 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* 新增动画 */
+        @keyframes flipPage {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(-30deg); }
+        }
+        
+        @keyframes waveLeft {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-10deg); }
+        }
+        
+        @keyframes waveRight {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+        
+        @keyframes blink {
+            0%, 45%, 55%, 100% { height: 8px; }
+            48%, 52% { height: 1px; }
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(10deg);
+                opacity: 0;
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content, .hero-graphics {
+                flex: none;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero-heading {
+                font-size: 32px;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero-graphics {
+                margin-top: 30px;
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .hero-heading {
+                font-size: 26px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lang-toggle span {
+                display: none;
+            }
+            
+            .lang-toggle {
+                width: 45px;
+                height: 45px;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+        }
+            /* 更自然的眨眼动画 */
+        @keyframes blink {
+            0%, 45%, 55%, 100% { transform: scaleY(1); }
+            48%, 52% { transform: scaleY(0.1); }
+        }
+        
+        /* 耳朵摆动动画 */
+        @keyframes earMove {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-3px) rotate(-3deg); }
+        }
+        
+        /* 尾巴摆动 */
+        .panda-tail {
+            position: absolute;
+            width: 30px;
+            height: 15px;
+            background: black;
+            border-radius: 50%;
+            bottom: 85px;
+            right: 15px;
+            transform-origin: left center;
+            animation: wagTail 4s infinite;
+        }
+        
+        @keyframes wagTail {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+        
+        /* 竹子样式 */
+        .bamboo {
+            position: absolute;
+            width: 15px;
+            height: 100px;
+            background: #27ae60;
+            border-radius: 7px;
+            bottom: 40px;
+            left: 20%;
+            z-index: 0;
+            box-shadow: inset 0 0 0 2px #2ecc71;
+        }
+        
+        .bamboo::before, .bamboo::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 8px;
+            background: #27ae60;
+            border-radius: 4px;
+            left: -5px;
+        }
+        
+        .bamboo::before {
+            top: 20px;
+            transform: rotate(30deg);
+        }
+        
+        .bamboo::after {
+            top: 50px;
+            transform: rotate(-15deg);
+        }
+        
+        /* 云朵背景 */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            z-index: -1;
+            animation: floatCloud 20s infinite linear;
+        }
+        
+        .cloud1 { width: 50px; height: 30px; top: 20%; left: 10%; }
+        .cloud2 { width: 70px; height: 40px; top: 40%; right: 15%; animation-delay: -5s; }
+        .cloud3 { width: 40px; height: 25px; bottom: 30%; left: 30%; animation-delay: -10s; }
+        
+        @keyframes floatCloud {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+        
+        /* 汉字气泡 */
+        .speech-bubble {
+            position: absolute;
+            background: white;
+            border-radius: 15px;
+            padding: 8px 12px;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            animation: bubbleFloat 6s infinite;
+            opacity: 0;
+        }
+        
+        .bubble1 { top: 15%; right: 20%; animation-delay: 1s; }
+        .bubble2 { top: 30%; left: 15%; animation-delay: 3s; }
+        .bubble3 { top: 50%; right: 10%; animation-delay: 5s; }
+        
+        @keyframes bubbleFloat {
+            0%, 100% { opacity: 0; transform: translateY(20px); }
+            10%, 80% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 书本点击效果 */
+        .book {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .book:active {
+            transform: scale(0.95);
+        }
+        
+        /* 熊猫悬停效果 */
+        .panda:hover .panda-head {
+            transform: rotate(-5deg);
+        }
+        
+        .panda:hover .panda-eye-inner {
+            animation: blink 2s infinite;
+        }
+        
+        /* 优化手臂动画 */
+        @keyframes waveLeft {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-20deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-10deg); }
+        }
+        
+        @keyframes waveRight {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(20deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(10deg); }
+        }
+        /* 新增导航卡片样式 */
+        .platform-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .platform-logo {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+        }
+        
+        .platform-logo img {
+            max-width: 100%;
+            max-height: 80px;
+            object-fit: contain;
+        }
+        
+        .platform-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .platform-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .platform-desc {
+            color: var(--light-text);
+            margin-bottom: 15px;
+            flex: 1;
+        }
+        
+        .visit-btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .visit-btn:hover {
+            background: #e6b800;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(241, 196, 15, 0.3);
+        }
+        
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .category-title {
+            font-size: 24px;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+        }
+        
+        /* 游戏区替换为导航卡片 */
+        .navigation-section {
+            margin-bottom: 60px;
+        }
+        
+        /* 新增：用户评价区域 */
+        .testimonials-section {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 60px 0;
+            margin-bottom: 60px;
+            border-radius: 20px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -30px;
+            left: 20px;
+            font-size: 120px;
+            color: var(--secondary);
+            opacity: 0.2;
+            font-family: serif;
+        }
+        
+        .testimonial-text {
+            font-size: 18px;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+        
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        /* 新增：进度指示器 */
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .progress-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+        
+        /* 新增：交互式按钮效果 */
+        .interactive-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .interactive-btn:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 100%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .interactive-btn:hover:after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* 新增：评价轮播容器样式 */
+        .testimonials-container {
+            position: relative;
+            min-height: 250px;
+        }
+        
+        .testimonial-item {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .testimonial-item.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-dragon" style="font-size: 32px; color: var(--accent);"></i>
+                <h1>CHINESE <span class="for-kids">FOR KIDS</span></h1>
+            </div>
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> <span class="lang" data-key="home">首页</span></a></li>
+                    <li><a href="courses.html"><i class="fas fa-book"></i> <span class="lang" data-key="courses">课程资源</span></a></li>
+                    <li><a href="games.html"><i class="fas fa-gamepad"></i> <span class="lang" data-key="games">游戏教学</span></a></li>
+                    <li><a href="ai.html"><i class="fas fa-robot"></i> <span class="lang" data-key="ai">AI互动</span></a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> <span class="lang" data-key="contact">联系我们</span></a></li>
+                </ul>
+            </nav>
+            <button class="lang-toggle" id="langToggle">
+                <i class="fas fa-globe"></i>
+                <span class="lang" data-key="language">EN/中文</span>
+            </button>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i> <span class="lang" data-key="home">首页</span></a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> <span class="lang" data-key="courses">课程资源</span></a></li>
+                <li><a href="games.html"><i class="fas fa-gamepad"></i> <span class="lang" data-key="games">游戏教学</span></a></li>
+                <li><a href="#"><i class="fas fa-robot"></i> <span class="lang" data-key="ai">AI互动</span></a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> <span class="lang" data-key="contact">联系我们</span></a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 顶部宣传区 -->
+        <section class="hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-heading lang" data-key="hero-heading">游戏中学汉语，快乐玩文化！</h1>
+                    <p class="hero-subheading lang" data-key="hero-subheading">面向6-9岁少儿的趣味汉语学习平台</p>
+                    <button class="btn lang interactive-btn" data-key="start-btn">立即开始</button>
+                </div>
+                <div class="hero-graphics">
+                    <!-- 学习动画区域 -->
+                    <div class="learning-animation">
+                        <!-- 云朵背景 -->
+                        <div class="cloud cloud1"></div>
+                        <div class="cloud cloud2"></div>
+                        <div class="cloud cloud3"></div>
+                        
+                        <!-- 汉字气泡 -->
+                        <div class="speech-bubble bubble1">学</div>
+                        <div class="speech-bubble bubble2">乐</div>
+                        <div class="speech-bubble bubble3">趣</div>
+                        
+                        <!-- 竹子 -->
+                        <div class="bamboo"></div>
+                        
+                        <!-- 漂浮的汉字 -->
+                        <div class="hanzi" style="left: 20%; top: 20%;">汉</div>
+                        <div class="hanzi" style="left: 30%; top: 40%; animation-delay: 1s;">语</div>
+                        <div class="hanzi" style="left: 70%; top: 10%; animation-delay: 2s;">学</div>
+                        <div class="hanzi" style="left: 80%; top: 50%; animation-delay: 3s;">习</div>
+                        <div class="hanzi" style="left: 50%; top: 30%; animation-delay: 4s;">乐</div>
+                        
+                        <!-- 书本 -->
+                        <div class="book">
+                            <div class="page"></div>
+                        </div>
+                        
+                        <!-- 熊猫角色 -->
+                        <div class="panda">
+                            <div class="panda-head">
+                                <div class="panda-ear left"></div>
+                                <div class="panda-ear right"></div>
+                                <div class="panda-eye left">
+                                    <div class="panda-eye-inner"></div>
+                                </div>
+                                <div class="panda-eye right">
+                                    <div class="panda-eye-inner"></div>
+                                </div>
+                                <div class="panda-nose"></div>
+                                <div class="panda-mouth"></div>
+                            </div>
+                            <div class="panda-body"></div>
+                            <div class="panda-arm left"></div>
+                            <div class="panda-arm right"></div>
+                            <!-- 新增尾巴 -->
+                            <div class="panda-tail"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 汉语学习平台推荐部分 -->
+        <section class="features-section container">
+            <h2 class="section-title lang" data-key="platform-section-title">精选汉语学习平台</h2>
+            <div class="features-grid">
+                <!-- Little Fox Chinese -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="Little%20Fox%20Chinese.png" alt="Little Fox Chinese">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform1-title">Little Fox Chinese</h3>
+                            <p class="platform-desc lang" data-key="platform1-desc">通过分级动画、儿歌和游戏学习中文，适合3-12岁儿童</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform1-feature1">5级难度动画</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform1-feature2">配套练习和单词表</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform1-feature3">发音标准，趣味性强</span>
+                            </div>
+                            <a href="https://chinese.littlefox.com/en" 
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 中文联盟（ChinesePlus） -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="ChinesePlus.png" alt="中文联盟">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform2-title">中文联盟（ChinesePlus）</h3>
+                            <p class="platform-desc lang" data-key="platform2-desc">覆盖全学龄段，含HSK备考资源，多语言教材下载</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform2-feature1">词汇、口语、听力练习</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform2-feature2">PPT、汉字卡片等教学工具</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform2-feature3">文化主题课程丰富</span>
+                            </div>
+                            <a href="https://www.chineseplus.net/home" target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 全球中文学习平台 -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="quanqiuzw.png" alt="全球中文学习平台">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform3-title">全球中文学习平台</h3>
+                            <p class="platform-desc lang" data-key="platform3-desc">涵盖从启蒙到进阶的中文课程，文化内容丰富</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform3-feature1">古诗、成语、书法等文化内容</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform3-feature2">字帖生成工具</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform3-feature3">AI翻译功能</span>
+                            </div>
+                            <a href="https://www.chinese-learning.cn/#/web" target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Standard Mandarin & Mandarin Matrix -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="Mandarin%20Matrix.webp" alt="Standard Mandarin">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform4-title">Standard Mandarin & Mandarin Matrix</h3>
+                            <p class="platform-desc lang" data-key="platform4-desc">专注拼音、语法和阅读，适合海外儿童认读</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform4-feature1">汉字附英文解析及音频</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform4-feature2">HSK备考资源</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform4-feature3">系统化的阅读材料</span>
+                            </div>
+                            <a href="https://mandarinmatrix.org/"
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增平台：中外语言交流合作中心 -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="zwyyjlhzzx.png" alt="中外语言交流合作中心">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform5-title">中外语言交流合作中心</h3>
+                            <p class="platform-desc lang" data-key="platform5-desc">官方汉语推广机构，提供丰富的教学资源和文化活动</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform5-feature1">孔子学院官方支持</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform5-feature2">教师培训资源</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform5-feature3">文化交流项目</span>
+                            </div>
+                            <a href="https://www.chinese.cn/page/#/pcpage/mainpage" 
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增平台：中文考试服务网 -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="hkgj.png" alt="中文考试服务网">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform6-title">中文考试服务网</h3>
+                            <p class="platform-desc lang" data-key="platform6-desc">提供HSK、YCT等中文考试的官方报名和备考资源</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform6-feature1">在线模拟考试系统</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform6-feature2">考试真题下载</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform6-feature3">考试指南与技巧</span>
+                            </div>
+                            <a href="https://www.chinesetest.cn/" 
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增平台：外籍人才综合服务平台 -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="chinajob.png" alt="外籍人才综合服务平台">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform7-title">外籍人才综合服务平台</h3>
+                            <p class="platform-desc lang" data-key="platform7-desc">为外籍人士提供中文学习、就业和文化适应服务</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform7-feature1">职业汉语培训</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform7-feature2">跨文化交流资源</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform7-feature3">求职招聘信息</span>
+                            </div>
+                            <a href="https://www.chinajob.com/index.php" 
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增平台：国际中文教育资源网 -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="gjzwjyzy.png" alt="国际中文教育资源网">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform8-title">国际中文教育资源网</h3>
+                            <p class="platform-desc lang" data-key="platform8-desc">提供全面的中文教材、教案和多媒体教学资源</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform8-feature1">分级教材下载</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform8-feature2">互动课件资源</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform8-feature3">教学案例分享</span>
+                            </div>
+                            <a href="https://www.hfbook.cn/" 
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增平台：世界汉语教学学会 -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="shihan.png" alt="世界汉语教学学会">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform9-title">世界汉语教学学会</h3>
+                            <p class="platform-desc lang" data-key="platform9-desc">全球汉语教学专业组织，提供学术资源和教师发展</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform9-feature1">学术期刊与论文</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform9-feature2">国际会议信息</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform9-feature3">教师认证培训</span>
+                            </div>
+                            <a href="http://www.shihan.org.cn/" 
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增平台：汉风语音通 -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="hfbook.png" alt="汉风语音通">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform10-title">汉风语音通</h3>
+                            <p class="platform-desc lang" data-key="platform10-desc">专注于汉语发音训练的智能平台，纠正发音问题</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform10-feature1">AI发音评估</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform10-feature2">声调训练系统</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform10-feature3">即时发音反馈</span>
+                            </div>
+                            <a href="https://phonetic.hfbook.cn/practice" 
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增平台：哈兔中文 -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="ihatoo.png" alt="哈兔中文">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform11-title">哈兔中文</h3>
+                            <p class="platform-desc lang" data-key="platform11-desc">专注海外华裔青少儿中文教育，提供沉浸式学习体验</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform11-feature1">1对1在线教学</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform11-feature2">中华文化特色课程</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform11-feature3">专业教师团队</span>
+                            </div>
+                            <a href="https://www.ihatoo.com/" 
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 新增平台：悟空中文 -->
+                <div class="feature-card">
+                    <div class="platform-card">
+                        <div class="platform-logo">
+                            <img src="wukong.svg" alt="悟空中文">
+                        </div>
+                        <div class="platform-content">
+                            <h3 class="platform-title lang" data-key="platform12-title">悟空中文</h3>
+                            <p class="platform-desc lang" data-key="platform12-desc">为海外儿童提供系统性中文课程，融合中国传统文化</p>
+                            <div class="platform-features">
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform12-feature1">互动游戏化教学</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform12-feature2">分级阅读材料</span><br>
+                                <i class="fas fa-star"></i> <span class="lang" data-key="platform12-feature3">个性化学习路径</span>
+                            </div>
+                            <a href="https://www.wukongsch.com/zh/chinese/" 
+                                target="_blank" class="visit-btn lang interactive-btn" data-key="visit-btn">访问平台</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 新增：用户评价区域 -->
+        <section class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title lang" data-key="testimonials-title">家长和教师评价</h2>
+                <div class="testimonials-container">
+                    <!-- 第一个评价：家长评价 -->
+                    <div class="testimonial-item active" id="testimonial1">
+                        <div class="testimonial-card">
+                            <p class="testimonial-text lang" data-key="testimonial1">
+                                "这个平台让我的孩子爱上了中文学习！每天他都会主动要求学习新的汉字和故事，游戏化的学习方式特别适合儿童注意力特点。"
+                            </p>
+                            <div class="testimonial-author lang" data-key="testimonial1-author">—— 张女士，7岁孩子的妈妈</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第二个评价：教师评价 -->
+                    <div class="testimonial-item" id="testimonial2">
+                        <div class="testimonial-card">
+                            <p class="testimonial-text lang" data-key="testimonial2">
+                                "作为一名国际学校的汉语教师，我发现这个平台的教学资源非常丰富且专业。游戏化教学设计科学，能够有效激发学生的学习兴趣，特别是对于非母语学生效果显著。"
+                            </p>
+                            <div class="testimonial-author lang" data-key="testimonial2-author">—— 李老师，国际学校汉语教师</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-dot active" data-index="0"></div>
+                    <div class="progress-dot" data-index="1"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h2>CHINESE FOR KIDS</h2>
+                <p class="lang" data-key="footer-text">2025国际少儿汉语教育研究组</p>
+                <div class="social-links">
+                    <a href="https://weixin.qq.com/" target="_blank"><i class="fab fa-weixin"></i></a>
+                    <a href="https://im.qq.com/index/" target="_blank"><i class="fab fa-qq"></i></a>
+                    <a href="https://weibo.com/" target="_blank"><i class="fab fa-weibo"></i></a>
+                    <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Chinese For Kids <span class="lang" data-key="rights">版权所有</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 语言切换功能
+        const translations = {
+            'zh-CN': {
+                'home': '首页',
+                'courses': '课程资源',
+                'games': '游戏教学',
+                'ai': 'AI互动',
+                'contact': '联系我们',
+                'language': 'EN/中文',
+                'hero-heading': '游戏中学汉语，快乐玩文化！',
+                'hero-subheading': '面向6-9岁少儿的趣味汉语学习平台',
+                'start-btn': '立即开始',
+                'platform-section-title': '精选汉语学习平台',
+                'platform1-title': 'Little Fox Chinese',
+                'platform1-desc': '通过分级动画、儿歌和游戏学习中文，适合3-12岁儿童',
+                'platform1-feature1': '5级难度动画',
+                'platform1-feature2': '配套练习和单词表',
+                'platform1-feature3': '发音标准，趣味性强',
+                'platform2-title': '中文联盟（ChinesePlus）',
+                'platform2-desc': '覆盖全学龄段，含HSK备考资源，多语言教材下载',
+                'platform2-feature1': '词汇、口语、听力练习',
+                'platform2-feature2': 'PPT、汉字卡片等教学工具',
+                'platform2-feature3': '文化主题课程丰富',
+                'platform3-title': '全球中文学习平台',
+                'platform3-desc': '涵盖从启蒙到进阶的中文课程，文化内容丰富',
+                'platform3-feature1': '古诗、成语、书法等文化内容',
+                'platform3-feature2': '字帖生成工具',
+                'platform3-feature3': 'AI翻译功能',
+                'platform4-title': 'Standard Mandarin & Mandarin Matrix',
+                'platform4-desc': '专注拼音、语法和阅读，适合海外儿童认读',
+                'platform4-feature1': '汉字附英文解析及音频',
+                'platform4-feature2': 'HSK备考资源',
+                'platform4-feature3': '系统化的阅读材料',
+                'platform5-title': '中外语言交流合作中心',
+                'platform5-desc': '官方汉语推广机构，提供丰富的教学资源和文化活动',
+                'platform5-feature1': '孔子学院官方支持',
+                'platform5-feature2': '教师培训资源',
+                'platform5-feature3': '文化交流项目',
+                'platform6-title': '中文考试服务网',
+                'platform6-desc': '提供HSK、YCT等中文考试的官方报名和备考资源',
+                'platform6-feature1': '在线模拟考试系统',
+                'platform6-feature2': '考试真题下载',
+                'platform6-feature3': '考试指南与技巧',
+                'platform7-title': '外籍人才综合服务平台',
+                'platform7-desc': '为外籍人士提供中文学习、就业和文化适应服务',
+                'platform7-feature1': '职业汉语培训',
+                'platform7-feature2': '跨文化交流资源',
+                'platform7-feature3': '求职招聘信息',
+                'platform8-title': '国际中文教育资源网',
+                'platform8-desc': '提供全面的中文教材、教案和多媒体教学资源',
+                'platform8-feature1': '分级教材下载',
+                'platform8-feature2': '互动课件资源',
+                'platform8-feature3': '教学案例分享',
+                'platform9-title': '世界汉语教学学会',
+                'platform9-desc': '全球汉语教学专业组织，提供学术资源和教师发展',
+                'platform9-feature1': '学术期刊与论文',
+                'platform9-feature2': '国际会议信息',
+                'platform9-feature3': '教师认证培训',
+                'platform10-title': '汉风语音通',
+                'platform10-desc': '专注于汉语发音训练的智能平台，纠正发音问题',
+                'platform10-feature1': 'AI发音评估',
+                'platform10-feature2': '声调训练系统',
+                'platform10-feature3': '即时发音反馈',
+                'platform11-title': '哈兔中文',
+                'platform11-desc': '专注海外华裔青少儿中文教育，提供沉浸式学习体验',
+                'platform11-feature1': '1对1在线教学',
+                'platform11-feature2': '中华文化特色课程',
+                'platform11-feature3': '专业教师团队',
+                'platform12-title': '悟空中文',
+                'platform12-desc': '为海外儿童提供系统性中文课程，融合中国传统文化',
+                'platform12-feature1': '互动游戏化教学',
+                'platform12-feature2': '分级阅读材料',
+                'platform12-feature3': '个性化学习路径',
+                'visit-btn': '访问平台',
+                'teacher-title': '教师支持区',
+                'teacher-subtitle': '为汉语教师提供的丰富教学资源和工具',
+                'teacher1-title': '教学权限管理',
+                'teacher1-desc': '个性化教学权限设置',
+                'teacher2-title': '下载教学模板',
+                'teacher2-desc': '教案模板及教学计划',
+                'teacher3-title': 'FAQ',
+                'teacher3-desc': '常见问题解答',
+                'teacher4-title': '教学指南',
+                'teacher4-desc': '详细教学方法和指导',
+                'footer-text': '2025国际少儿汉语教育研究组',
+                'rights': '版权所有',
+                'testimonials-title': '家长和教师评价',
+                'testimonial1': '"这个平台让我的孩子爱上了中文学习！每天他都会主动要求学习新的汉字和故事，游戏化的学习方式特别适合儿童注意力特点。"',
+                'testimonial1-author': '—— 张女士，7岁孩子的妈妈',
+                'testimonial2': '"作为一名国际学校的汉语教师，我发现这个平台的教学资源非常丰富且专业。游戏化教学设计科学，能够有效激发学生的学习兴趣，特别是对于非母语学生效果显著。"',
+                'testimonial2-author': '—— 李老师，国际学校汉语教师'
+            },
+            'en': {
+                'home': 'Home',
+                'courses': 'Course Resources',
+                'games': 'Game Teaching',
+                'ai': 'AI Interaction',
+                'contact': 'Contact Us',
+                'language': '中文/EN',
+                'hero-heading': 'Learn Chinese through Games, Enjoy Culture!',
+                'hero-subheading': 'Fun Chinese Learning Platform for Kids Aged 6-9',
+                'start-btn': 'Get Started',
+                'platform-section-title': 'Selected Chinese Learning Platforms',
+                'platform1-title': 'Little Fox Chinese',
+                'platform1-desc': 'Learn Chinese through leveled animations, nursery rhymes and games for children aged 3-12',
+                'platform1-feature1': '5-level difficulty animations',
+                'platform1-feature2': 'Supporting exercises and vocabulary lists',
+                'platform1-feature3': 'Standard pronunciation and fun content',
+                'platform2-title': 'ChinesePlus',
+                'platform2-desc': 'Covers all age groups, includes HSK preparation resources, multilingual materials',
+                'platform2-feature1': 'Vocabulary, speaking, listening exercises',
+                'platform2-feature2': 'Teaching tools like PPT and character cards',
+                'platform2-feature3': 'Rich cultural theme courses',
+                'platform3-title': 'Global Chinese Learning Platform',
+                'platform3-desc': 'Covers Chinese courses from beginner to advanced levels with rich cultural content',
+                'platform3-feature1': 'Ancient poems, idioms, calligraphy and other cultural content',
+                'platform3-feature2': 'Copybook generator tool',
+                'platform3-feature3': 'AI translation function',
+                'platform4-title': 'Standard Mandarin & Mandarin Matrix',
+                'platform4-desc': 'Focus on Pinyin, grammar and reading, suitable for overseas children',
+                'platform4-feature1': 'Characters with English explanations and audio',
+                'platform4-feature2': 'HSK preparation resources',
+                'platform4-feature3': 'Systematic reading materials',
+                'platform5-title': 'Center for Language Education and Cooperation',
+                'platform5-desc': 'Official Chinese promotion institution providing rich teaching resources and cultural activities',
+                'platform5-feature1': 'Confucius Institute official support',
+                'platform5-feature2': 'Teacher training resources',
+                'platform5-feature3': 'Cultural exchange programs',
+                'platform6-title': 'Chinese Test Service Network',
+                'platform6-desc': 'Official registration and preparation resources for HSK, YCT and other Chinese tests',
+                'platform6-feature1': 'Online mock exam system',
+                'platform6-feature2': 'Past exam papers download',
+                'platform6-feature3': 'Exam guides and tips',
+                'platform7-title': 'Comprehensive Service Platform for Foreign Talents',
+                'platform7-desc': 'Provides Chinese learning, employment and cultural adaptation services for foreigners',
+                'platform7-feature1': 'Professional Chinese training',
+                'platform7-feature2': 'Cross-cultural communication resources',
+                'platform7-feature3': 'Job search and recruitment information',
+                'platform8-title': 'International Chinese Education Resource Network',
+                'platform8-desc': 'Provides comprehensive Chinese textbooks, lesson plans and multimedia teaching resources',
+                'platform8-feature1': 'Graded textbook downloads',
+                'platform8-feature2': 'Interactive courseware resources',
+                'platform8-feature3': 'Teaching case sharing',
+                'platform9-title': 'International Society for Chinese Language Teaching',
+                'platform9-desc': 'Global professional organization for Chinese teaching, providing academic resources and teacher development',
+                'platform9-feature1': 'Academic journals and papers',
+                'platform9-feature2': 'International conference information',
+                'platform9-feature3': 'Teacher certification training',
+                'platform10-title': 'Hanfeng Phonetic Assistant',
+                'platform10-desc': 'Smart platform focused on Chinese pronunciation training to correct pronunciation problems',
+                'platform10-feature1': 'AI pronunciation assessment',
+                'platform10-feature2': 'Tone training system',
+                'platform10-feature3': 'Instant pronunciation feedback',
+                'platform11-title': 'Hatutu Chinese',
+                'platform11-desc': 'Focuses on Chinese education for overseas Chinese youth, providing immersive learning experiences',
+                'platform11-feature1': '1-on-1 online teaching',
+                'platform11-feature2': 'Chinese cultural courses',
+                'platform11-feature3': 'Professional teaching team',
+                'platform12-title': 'Wukong Chinese',
+                'platform12-desc': 'Provides systematic Chinese courses for overseas children, integrating traditional Chinese culture',
+                'platform12-feature1': 'Interactive gamified teaching',
+                'platform12-feature2': 'Graded reading materials',
+                'platform12-feature3': 'Personalized learning path',
+                'visit-btn': 'Visit Platform',
+                'teacher-title': 'Teacher Support',
+                'teacher-subtitle': 'Rich teaching resources and tools for Chinese teachers',
+                'teacher1-title': 'Teaching Permissions',
+                'teacher1-desc': 'Personalized teaching permission settings',
+                'teacher2-title': 'Template Download',
+                'teacher2-desc': 'Lesson plans and teaching templates',
+                'teacher3-title': 'FAQ',
+                'teacher3-desc': 'Frequently asked questions',
+                'teacher4-title': 'Teaching Guide',
+                'teacher4-desc': 'Detailed teaching methods and guidance',
+                'footer-text': '2025 International Children\'s Chinese Education Research Group',
+                'rights': 'All Rights Reserved',
+                'testimonials-title': 'Parents and Teachers Reviews',
+                'testimonial1': '"This platform made my child fall in love with learning Chinese! Every day he asks to learn new characters and stories. The gamified approach is perfect for children\'s attention span."',
+                'testimonial1-author': '—— Mrs. Zhang, Mother of a 7-year-old',
+                'testimonial2': '"As a Chinese teacher at an international school, I find this platform\'s teaching resources very rich and professional. The gamified teaching design is scientific and effectively stimulates students\' learning interest, especially for non-native speakers."',
+                'testimonial2-author': '—— Mr. Li, Chinese Teacher at International School'
+            }
+        };
+
+        let currentLang = 'zh-CN';
+
+        // 切换语言
+        function switchLanguage() {
+            currentLang = currentLang === 'zh-CN' ? 'en' : 'zh-CN';
+            updateLanguage();
+        }
+
+        // 更新页面语言
+        function updateLanguage() {
+            document.querySelectorAll('.lang').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+        }
+
+        // 为按钮添加简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 页面加载时初始化语言
+            updateLanguage();
+            
+            const buttons = document.querySelectorAll('.btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const message = currentLang === 'zh-CN' ? 
+                        '欢迎使用Chinese For Kids平台！开始快乐学习之旅！' : 
+                        'Welcome to Chinese For Kids! Start your fun learning journey!';
+                    alert(message);
+                });
+            });
+            
+            // 语言切换功能
+            const langToggle = document.getElementById('langToggle');
+            langToggle.addEventListener('click', switchLanguage);
+            
+            // 卡片悬停效果增强
+            const cards = document.querySelectorAll('.feature-card, .teacher-item, .resource-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // 移动端菜单切换
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+            });
+            
+            // 关闭移动菜单点击菜单项时
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+            
+            // 书本点击翻页效果
+            const book = document.querySelector('.book');
+            const page = document.querySelector('.page');
+            
+            book.addEventListener('click', function() {
+                page.style.animation = 'none';
+                setTimeout(() => {
+                    page.style.animation = 'flipPage 6s infinite';
+                }, 10);
+            });
+            
+            // 鼠标移动时眼珠跟随效果
+            const pandaArea = document.querySelector('.learning-animation');
+            const leftEye = document.querySelector('.panda-eye.left .panda-eye-inner');
+            const rightEye = document.querySelector('.panda-eye.right .panda-eye-inner');
+            
+            pandaArea.addEventListener('mousemove', (e) => {
+                const rect = pandaArea.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // 计算眼珠偏移量
+                const leftEyeX = (x - 75) / 30;
+                const leftEyeY = (y - 135) / 30;
+                const rightEyeX = (x - 125) / 30;
+                const rightEyeY = (y - 135) / 30;
+                
+                // 限制偏移范围
+                const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+                
+                leftEye.style.transform = `translate(${clamp(leftEyeX, -3, 3)}px, ${clamp(leftEyeY, -3, 3)}px)`;
+                rightEye.style.transform = `translate(${clamp(rightEyeX, -3, 3)}px, ${clamp(rightEyeY, -3, 3)}px)`;
+            });
+            
+            // 鼠标离开时眼珠复位
+            pandaArea.addEventListener('mouseleave', () => {
+                leftEye.style.transform = 'translate(0, 0)';
+                rightEye.style.transform = 'translate(0, 0)';
+            });
+            
+            // 随机生成漂浮汉字
+            function createFloatingHanzi() {
+                const hanziContainer = document.querySelector('.learning-animation');
+                const hanziCharacters = ['汉','书','笔','文','风','雨','山','月','光','语', '学', '习', '乐', '人', '文', '化', '中', '国'];
+                
+                // 移除现有汉字
+                document.querySelectorAll('.hanzi').forEach(el => el.remove());
+                
+                // 添加新汉字
+                for (let i = 0; i < 8; i++) {
+                    const hanzi = document.createElement('div');
+                    hanzi.className = 'hanzi';
+                    hanzi.textContent = hanziCharacters[Math.floor(Math.random() * hanziCharacters.length)];
+                    hanzi.style.left = `${Math.random() * 80 + 10}%`;
+                    hanzi.style.top = `${Math.random() * 70 + 15}%`;
+                    hanzi.style.animationDelay = `${Math.random() * 5}s`;
+                    hanzi.style.fontSize = `${Math.random() * 10 + 20}px`;
+                    hanzi.style.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                    hanziContainer.appendChild(hanzi);
+                }
+            }
+            
+            createFloatingHanzi();
+            setInterval(createFloatingHanzi, 20000); // 每20秒更换一次汉字
+            
+            // 熊猫打招呼动画
+            setTimeout(() => {
+                document.querySelector('.panda').classList.add('wave');
+                setTimeout(() => {
+                    document.querySelector('.panda').classList.remove('wave');
+                }, 2000);
+            }, 3000);
+            
+            // 用户评价轮播
+            const dots = document.querySelectorAll('.progress-dot');
+            const testimonialItems = document.querySelectorAll('.testimonial-item');
+            let currentTestimonial = 0;
+            
+            function showTestimonial(index) {
+                // 隐藏所有评价
+                testimonialItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // 显示选中的评价
+                testimonialItems[index].classList.add('active');
+                
+                // 更新指示点
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                dots[index].classList.add('active');
+                
+                currentTestimonial = index;
+            }
+            
+            // 点击指示点切换评价
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showTestimonial(index);
+                });
+            });
+            
+            // 自动轮播评价
+            setInterval(() => {
+                let nextTestimonial = currentTestimonial + 1;
+                if (nextTestimonial >= testimonialItems.length) {
+                    nextTestimonial = 0;
+                }
+                showTestimonial(nextTestimonial);
+            }, 5000);
+        });    
+    </script>
+</body>
+</html>
