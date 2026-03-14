@@ -720,35 +720,6 @@
             const voiceResult = document.getElementById('voiceResult');
             const voiceStatus = document.getElementById('voiceStatus');
             
-            // AI回复函数
-            function getAIResponse(message) {
-                const responses = {
-                    "你好": ["你好！很高兴认识你！", "你好呀！今天想学点什么中文呢？", "你好！我是你的中文学习助手。"],
-                    "你叫什么名字": ["我叫小智，你的中文学习助手！", "我是中文学习AI，你可以叫我小智。", "我是AI助手，专门帮你学习中文的！"],
-                    "谢谢": ["不客气！", "很高兴能帮到你！", "有问题随时问我哦！"],
-                    "再见": ["再见！下次再来学习哦！", "期待下次和你练习中文！", "再见！祝你学习进步！"],
-                    "天气": ["今天的天气真不错，适合学习中文！", "阳光明媚的天气让人心情愉快！", "无论天气如何，学习中文都是个好主意！"]
-                };
-                
-                // 检查是否有预设回复
-                for (const key in responses) {
-                    if (message.includes(key)) {
-                        return responses[key][Math.floor(Math.random() * responses[key].length)];
-                    }
-                }
-                
-                // 如果没有匹配的预设回复，生成通用回复
-                const genericResponses = [
-                    "我明白了，你说的是：" + message,
-                    "这是个有趣的话题！",
-                    "我们可以继续练习这个句子：" + message,
-                    "你的中文说得真好！",
-                    "关于" + message + "，我们可以多练习几次。"
-                ];
-                
-                return genericResponses[Math.floor(Math.random() * genericResponses.length)];
-            }
-            
             // 添加消息到聊天框
             function addMessage(text, isUser = false) {
                 const messageDiv = document.createElement('div');
@@ -760,23 +731,37 @@
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
             
-            // 发送消息
+            // 发送消息（调用真实后端）
             function sendMessage() {
                 const message = chatInput.value.trim();
-                if (message) {
-                    addMessage(message, true);
-                    chatInput.value = '';
-                    
-                    // 显示"正在输入"提示
-                    feedback.textContent = '小智正在输入...';
-                    
-                    // 模拟AI思考时间
-                    setTimeout(() => {
-                        feedback.textContent = '';
-                        const aiResponse = getAIResponse(message);
-                        addMessage(aiResponse);
-                    }, 1000 + Math.random() * 1500);
-                }
+                if (!message) return;
+                
+                addMessage(message, true);
+                chatInput.value = '';
+                
+                // 显示"正在输入"提示
+                feedback.textContent = '小智正在输入...';
+                
+                // 调用腾讯云函数后端
+                fetch('https://1411360789-5ee0ychge5.ap-nanjing.tencentscf.com/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应错误');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    feedback.textContent = '';
+                    addMessage(data.reply);
+                })
+                .catch(error => {
+                    feedback.textContent = '出错了，请稍后再试。';
+                    console.error('Fetch error:', error);
+                });
             }
             
             // 发送按钮事件
@@ -789,49 +774,23 @@
                 }
             });
             
-            // 智能问答卡片点击事件
+            // 智能问答卡片点击事件（沿用之前的模拟逻辑，但可以触发发送到真实后端）
             qaCards.forEach(card => {
                 card.addEventListener('click', function() {
                     const pattern = this.getAttribute('data-pattern');
                     
-                    // 添加用户消息
+                    // 构造用户消息
                     const userMessage = pattern === "我喜欢" ? "我喜欢吃苹果" : 
                                       pattern === "天气" ? "今天天气怎么样？" :
                                       pattern === "家庭" ? "你家有几口人？" : "你喜欢吃什么中国菜？";
                     
-                    addMessage(userMessage, true);
-                    
-                    // 显示"正在输入"提示
-                    feedback.textContent = '小智正在输入...';
-                    
-                    // 生成AI回复
-                    setTimeout(() => {
-                        feedback.textContent = '';
-                        
-                        let aiResponse;
-                        switch(pattern) {
-                            case "我喜欢":
-                                aiResponse = "我也喜欢吃苹果，你喜欢吃什么水果？";
-                                break;
-                            case "天气":
-                                aiResponse = "今天天气晴朗，阳光明媚。你觉得这样的天气适合做什么？";
-                                break;
-                            case "家庭":
-                                aiResponse = "我家有四口人：爸爸、妈妈、姐姐和我。你家里有哪些成员呢？";
-                                break;
-                            case "食物":
-                                aiResponse = "我喜欢吃饺子和宫保鸡丁。你最喜欢的中国菜是什么？";
-                                break;
-                            default:
-                                aiResponse = "这是一个很好的练习！让我们继续。";
-                        }
-                        
-                        addMessage(aiResponse);
-                    }, 1000 + Math.random() * 1500);
+                    // 将用户消息填入输入框并触发发送
+                    chatInput.value = userMessage;
+                    sendMessage();
                 });
             });
             
-            // 语音识别功能
+            // 语音识别功能（保持不变）
             let recognition;
             try {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
