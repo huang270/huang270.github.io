@@ -742,7 +742,7 @@
                 // 显示"正在输入"提示
                 feedback.textContent = '小智正在输入...';
                 
-                // 调用腾讯云函数后端 - 修改后的URL
+                // 调用腾讯云函数后端
                 fetch('https://1411360789-0q2e6xxr12.ap-shanghai.tencentscf.com/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -774,21 +774,23 @@
                 }
             });
             
-            // 智能问答卡片点击事件
+            // 智能问答卡片点击事件（沿用之前的模拟逻辑，但可以触发发送到真实后端）
             qaCards.forEach(card => {
                 card.addEventListener('click', function() {
                     const pattern = this.getAttribute('data-pattern');
                     
+                    // 构造用户消息
                     const userMessage = pattern === "我喜欢" ? "我喜欢吃苹果" : 
                                       pattern === "天气" ? "今天天气怎么样？" :
                                       pattern === "家庭" ? "你家有几口人？" : "你喜欢吃什么中国菜？";
                     
+                    // 将用户消息填入输入框并触发发送
                     chatInput.value = userMessage;
                     sendMessage();
                 });
             });
             
-            // 语音识别功能
+            // 语音识别功能（保持不变）
             let recognition;
             try {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -807,6 +809,7 @@
                     voiceResult.textContent = transcript;
                     voiceStatus.textContent = '识别完成';
                     
+                    // 自动发送识别结果到聊天
                     chatInput.value = transcript;
                     sendMessage();
                 };
@@ -831,17 +834,18 @@
                 voiceStatus.textContent = '您的浏览器不支持语音识别功能';
             }
             
+            // 语音按钮点击事件
             voiceBtn.addEventListener('click', function() {
                 if (recognition) {
                     recognition.start();
                 } else {
                     feedback.textContent = '您的浏览器不支持语音识别功能';
                     setTimeout(() => {
-                        反馈.文本内容 = '';
+                        feedback.textContent = '';
                     }, 3000);
                 }
             });
         });
-    </脚本>
+    </script>
 </body>
-        </html>
+</html>
